@@ -1,0 +1,2 @@
+0;User 1;123-4567;15-11-2024;29-11-2024;Birthday Cake;Vanilla;Two tiers with white fondant;$5000;Deposit;1 Test Street;Current
+1;John Doe;234-5678;2024-11-15;2024-11-29;Anniversary;Strawberry;Black, blue and white frosting with "Happy 50th Anniversary" on top;$10000;Deposited;2 MadeUpPlace Street;Ongoing
