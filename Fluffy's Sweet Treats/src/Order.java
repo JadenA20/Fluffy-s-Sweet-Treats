@@ -4,15 +4,16 @@
 //Creates and updates values of an order
 
 public class Order{
-    private String customerName, tele_num, date, type, desc, price, location, status, currentDate, paymentStatus, flavour;
+    private String date, type, desc, location, status, currentDate, paymentStatus, flavour;
+    private Customer customer;
+    private float price;
     private int id;
 
     //Constructor accepts the id assigned to the customer, the customer's name, the customer's phone number, the date on which the entry was entered, the due date of the order, the type of cake, the description of the order, the cost of the cake, payment Status of the customer, the delivery location and the status of the progress of the order.
 
-    public Order(int id, String customerName, String tele_num,String currentDate, String date,String type, String flavour, String desc,String price, String paymentStatus, String location, String status){
+    public Order(int id, Customer customer, String currentDate, String date,String type, String flavour, String desc, float price, String paymentStatus, String location, String status){
         this.id = id;
-        this.customerName = customerName;
-        this.tele_num = tele_num;
+        this.customer = customer;
         this.date = date;
         this.type = type;
         this.flavour = flavour;
@@ -31,12 +32,8 @@ public class Order{
         return id;
     }
 
-    public String getCustomerName(){
-        return customerName;
-    }
-
-    public String getPhone(){
-        return tele_num;
+    public Customer getCustomer(){
+        return customer;
     }
 
     public String getDueDate(){
@@ -51,7 +48,7 @@ public class Order{
         return desc;
     }
 
-    public String getPrice(){
+    public float getPrice(){
         return price;
     }
 
@@ -81,8 +78,12 @@ public class Order{
         this.status = newStatus;
     }
 
-    public void setName(String newName){
-        this.customerName = newName;
+    public void setFName(String newFName){
+        this.customer.setFirstName(newFName);
+    }
+
+    public void setLName(String newLName){
+        this.customer.setLastName(newLName);
     }
 
     public void setLocation(String newLocation){
@@ -94,14 +95,14 @@ public class Order{
     }
 
     public void setPhone(String newPhone){
-        this.tele_num = newPhone;
+        this.customer.setTelephone(newPhone);
     }
 
     public void setDesc(String newDesc){
         this.desc = newDesc;
     }
 
-    public void setPrice(String newPrice){
+    public void setPrice(float newPrice){
         this.price = newPrice;
     }
 

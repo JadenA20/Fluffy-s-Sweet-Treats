@@ -19,9 +19,12 @@ public class CreateOrders extends JFrame{
     private JButton save;
     private JPanel orderPanel;
     private JPanel entryPanel;
-    private JTextField enterName;
+    private JTextField enterFName;
+    private JTextField enterLName;
     private JTextField enterNumber;
+    private JTextField enterContactMethod;
     private JTextField enterDest;
+    private JTextField enterAddr;
     private JTextField enterDate;
     private JTextField enterType;
     private JTextField enterPrice;
@@ -30,11 +33,12 @@ public class CreateOrders extends JFrame{
     private JLabel paymentSelect;
     private JComboBox<String> paymentDrop;
     private Order order;
+    private Customer customer;
     private String[] paymentState= {"Deposited", "Pending", "Completed"};
     private String currentDate, paymentStatus;
     private static int id;
 
-    //Constructor formatts the frame for the addition of an entry to the Orders.txt file
+    //Constructor formats the frame for the addition of an entry to the Orders.txt file
     public CreateOrders(){
         setTitle("New Order Entry");
 
@@ -49,13 +53,25 @@ public class CreateOrders extends JFrame{
 
         //Input fields for user
 
-        entryPanel.add(new JLabel("Name of Customer (Eg. John Doe):")); 
-        enterName = new JTextField(40);
-        entryPanel.add(enterName);
+        entryPanel.add(new JLabel("Customer's First Name: ")); 
+        enterFName = new JTextField(40);
+        entryPanel.add(enterFName);
+
+        entryPanel.add(new JLabel("Customer's Last Name: ")); 
+        enterLName = new JTextField(40);
+        entryPanel.add(enterLName);
+
+        entryPanel.add(new JLabel("Customer's Address: ")); 
+        enterAddr = new JTextField(40);
+        entryPanel.add(enterAddr);
 
         entryPanel.add(new JLabel("Telephone Number:"));
         enterNumber = new JTextField(10);
         entryPanel.add(enterNumber);
+
+        entryPanel.add(new JLabel("Customer Contact Method (Eg. Whatsapp, Facebook etc.):"));
+        enterContactMethod = new JTextField(10);
+        entryPanel.add(enterContactMethod);
 
         entryPanel.add(new JLabel("Deadline (format: yyyy-mm-dd):"));
         enterDate = new JTextField(15);
@@ -92,7 +108,7 @@ public class CreateOrders extends JFrame{
         entryPanel.add(paymentSelect);
         entryPanel.add(paymentDrop);
 
-        entryPanel.setLayout(new GridLayout(10,2));
+        entryPanel.setLayout(new GridLayout(12,2));
 
         //Save aand Cancel buttons
        
@@ -118,13 +134,31 @@ public class CreateOrders extends JFrame{
 
     //This function adds the entries to the Orders.txt file
 
-    public void addToFile(Order order){
+    public void addToOrderFile(Order order){
 
         try{
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Orders.txt", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Current Orders.txt", true));
 
-            writer.write(order.getID() + ";" + order.getCustomerName() + ";" + order.getPhone() + ";" + order.getCurrentDate() + ";" + order.getDueDate() + ";" + order.getType() + ";" + order.getFlavour() + ";" + order.getDesc() + ";" + order.getPrice() + ";" + order.getPaymentStatus() + ";" + order.getLocation() + ";" + order.getStatus());
+            writer.write(order.getID() + ";" + order.getCustomer().getFirstName() + " "+ order.getCustomer().getLastName() + ";" + ";" + order.getCurrentDate() + ";" + order.getDueDate() + ";" + order.getType() + ";" + order.getFlavour() + ";" + order.getDesc() + ";" + order.getPrice() + ";" + order.getPaymentStatus() + ";" + order.getLocation() + ";" + order.getStatus());
+
+            writer.newLine();
+
+            writer.close();
+        } 
+        catch (IOException e) {
+            JOptionPane.showMessageDialog(CreateOrders.this,"An error was detected in accessing the file.", "File Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    //This function adds entries to the Customers.txt file
+    public void addToCustomerFile(Customer customer){
+
+        try{
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter("Customers.txt", true));
+
+            writer.write(order.getID() + ";" + customer.getFirstName() + " "+ customer.getLastName() +";" + customer.getAddress() + ";" + customer.getTelephone() + ";" + customer.getContactMethod());
 
             writer.newLine();
 
@@ -155,37 +189,38 @@ public class CreateOrders extends JFrame{
         public void actionPerformed(ActionEvent e){
             try{
 
-                String name = enterName.getText();
-                String tele_num = enterNumber.getText();
-                String date = enterDate.getText();
-                String type = enterType.getText();
-                String desc = enterDesc.getText();
-                String price = enterPrice.getText();
-                String location = enterDest.getText();
-                String flavour = enterFlavour.getText();
+                String fName = enterFName.getText().trim();
+                String lName = enterLName.getText().trim();
+                String tele_num = enterNumber.getText().trim();
+                String date = enterDate.getText().trim();
+                String type = enterType.getText().trim();
+                String desc = enterDesc.getText().trim();
+                float price = Float.parseFloat(enterPrice.getText().trim());
+                String location = enterDest.getText().trim();
+                String addr = enterAddr.getText().trim();
+                String flavour = enterFlavour.getText().trim();
+                String method = enterContactMethod.getText().trim();
+                            
+                customer = new Customer(fName, lName, addr, tele_num, method);
 
-                if (name.length() >= 2 ){
-                                            
-                    order = new Order(id, name, tele_num, currentDate, date, type, flavour, desc, price, paymentStatus, location, "Ongoing");
+                order = new Order(id, customer, currentDate, date, type, flavour, desc, price, paymentStatus, location, "Ongoing");
+                
+                addToCustomerFile(customer);
+                addToOrderFile(order);
 
-                    addToFile(order);
-
-                    JOptionPane.showMessageDialog(CreateOrders.this,"Order Sucessfully Saved", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
-                    
-                    setVisible(false);
-                    
-                }
-
-                else{
-                    JOptionPane.showMessageDialog(CreateOrders.this,"Name entered is Invalid.", "Name Entry Invalid",JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(CreateOrders.this,"Order Sucessfully Saved", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
+                
+                setVisible(false);
 
             }
                       
-            
             catch (NullPointerException npe) {
                 JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please check to ensure all fields are filled correctly.", "Error", JOptionPane.ERROR_MESSAGE);
  
+            }
+
+            catch(NumberFormatException nfe){
+                JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please ensure numbers are entered in numericaal fields.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
     
