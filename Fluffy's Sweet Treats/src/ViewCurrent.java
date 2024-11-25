@@ -22,7 +22,7 @@ public class ViewCurrent extends JFrame{
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel model;
-    private ArrayList<Order> orderList;
+    private ArrayList<Current> orderList;
 
     public ViewCurrent thisViewCurrent;
 
@@ -31,7 +31,7 @@ public class ViewCurrent extends JFrame{
 
         this.thisViewCurrent = this;
         HomeScreen homescreen = home;
-        User useracc = user;
+        //user = user.getFName();
 
 
         // Set Title
@@ -137,14 +137,14 @@ public class ViewCurrent extends JFrame{
         String[] columnNames=  {"ID",
             "Name",
             "Date Created",
-            "Due Date",
-            "Type",
+            "Event",
             "Flavour",
             "Description",
             "Price",
+            "Delivery Location",
             "Payment Status",
-            "Location",
-            "Order Status"
+            "Due Date",
+            "Status"
         };
 
         //Table Details
@@ -167,9 +167,9 @@ public class ViewCurrent extends JFrame{
 
 
     //Loads Orders from CurrentOrders.txt
-    private ArrayList<Order> loadOrders() { 
+    private ArrayList<Current> loadOrders() { 
 
-        ArrayList<Order> orderList = new ArrayList<Order>();
+        ArrayList<Current> orderList = new ArrayList<Current>();
     
         File orders = new File("CurrentOrders.txt");
         
@@ -180,21 +180,23 @@ public class ViewCurrent extends JFrame{
                 String[] details = line.split(";");
 
                 int id = Integer.parseInt(details[0]);
-                String fName = details[1];
-                String lName = details[2];
-                String currentDate = details[3];
-                String dueDate = details[4];
-                String type = details[5];
-                String flavour = details[6];
-                String desc = details[7];
-                String price = String.valueOf(details[8]);
-                String paymentStatus = details[9];
-                String location = details[10];
-                String status = details[11];
-                Customer c = new Customer(fName, lName, null, null, null);
-           
-                Order o = new Order(id, c, currentDate, dueDate, type, flavour, desc, Float.valueOf(price), paymentStatus, location, status);
-                orderList.add(o);
+                String custName = details[1];
+                String sepName[] = custName.split(" ");
+                String fname = sepName[0];
+                String lname = sepName[1];
+                String creationDate = details[2];
+                String event = details[3];
+                String flavour = details[4];
+                String desc = details[5];
+                String price = String.valueOf(details[6]);
+                String deliveryLocation = details[7];
+                String paymentStatus = details[8];
+                String dueDate = details[9];
+                String status = details[10];
+                Customer cust = new Customer(fname, lname, null, null, null);
+            
+                Current c = new Current(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate, status);
+                orderList.add(c);
 
                 }    
                   
@@ -217,35 +219,35 @@ public class ViewCurrent extends JFrame{
 
 
 
-    private void addToTable(Order o) //Adds order to table
+    private void addToTable(Current c) //Adds order to table
     {
         
-        int id = o.getID();
-        Customer customer = o.getCustomer();
+        int id = c.getID();
+        Customer customer = c.getCustomer();
         String customerName = customer.getName();
-        String currentDate = o.getCurrentDate();
-        String dueDate = o.getDueDate();
-        String type = o.getType();
-        String flavour = o.getFlavour();
-        String desc = o.getDesc();
-        String price = String.valueOf(o.getPrice());
-        String paymentStatus = o.getPaymentStatus();
-        String location = o.getLocation();
-        String status = o.getStatus();
+        String creationDate = c.getCreationDate();
+        String dueDate = c.getDueDate();
+        String event = c.getEvent();
+        String flavour = c.getFlavour();
+        String desc = c.getDesc();
+        String price = String.valueOf(c.getPrice());
+        String paymentStatus = c.getPaymentStatus();
+        String deliveryLocation = c.getDeliveryLocation();
+        String status = c.getStatus();
 
         
-        String[] order = {String.valueOf(id), customerName, currentDate, dueDate, type, flavour, desc, price, paymentStatus, location, status};
+        String[] order = {String.valueOf(id), customerName, creationDate, event, flavour, desc, price, deliveryLocation, paymentStatus, dueDate, status};
         model.addRow(order);        
 
     }
 
     //Displays CurrentOrder.txt via table 
-    private void displayTable(ArrayList<Order> orderList) 
+    private void displayTable(ArrayList<Current> orderList) 
     {
        int n = 0;
        if (orderList.size()>0)
        {
-        for (Order o: orderList)
+        for (Current c: orderList)
         {
          addToTable(orderList.get(n));
          n += 1;
