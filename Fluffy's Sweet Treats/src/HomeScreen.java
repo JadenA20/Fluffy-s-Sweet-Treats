@@ -13,13 +13,14 @@ import javax.swing.JPanel;
 public class HomeScreen extends JFrame{
     private JPanel menuPanel;
     private JLabel welcome, backgrounds;
-    private JButton orders, inventory, exit;
+    private JButton curOrders, comOrders, customers, inventory, exit;
 
     public HomeScreen thisHome;
 
-    public HomeScreen (String user){
+    public HomeScreen (String username){
         this.thisHome = this;
-        //UserLogin loginScreen = user; 
+        User user = new User(null, null, username, null, null);
+
 
         // Set Title
         setTitle("Fluffy's Sweet Treats Home Screen");
@@ -41,11 +42,23 @@ public class HomeScreen extends JFrame{
         welcome.setFont(f);
         welcome.setBounds(80, 50, 300, 50);
 
-        orders = new JButton("Orders");
-        orders.setBackground(new Color(120, 67, 59));
-        orders.setForeground(new Color(255, 255, 255));
-        orders.setFont(h);
-        orders.setBounds(30, 200, 100, 35);
+        curOrders = new JButton("Current Orders");
+        curOrders.setBackground(new Color(120, 67, 59));
+        curOrders.setForeground(new Color(255, 255, 255));
+        curOrders.setFont(h);
+        curOrders.setBounds(30, 150, 155, 35);
+
+        comOrders = new JButton("Completed Orders");
+        comOrders.setBackground(new Color(120, 67, 59));
+        comOrders.setForeground(new Color(255, 255, 255));
+        comOrders.setFont(h);
+        comOrders.setBounds(200, 150, 155, 35);
+
+        customers = new JButton("Customers");
+        customers.setBackground(new Color(120, 67, 59));
+        customers.setForeground(new Color(255, 255, 255));
+        customers.setFont(h);
+        customers.setBounds(30, 200, 100, 35);
 
         inventory = new JButton("Inventory");
         inventory.setBackground(new Color(120, 67, 59));
@@ -62,13 +75,17 @@ public class HomeScreen extends JFrame{
 
 
         menuPanel.add(welcome);
-        menuPanel.add(orders);
+        menuPanel.add(curOrders);
+        menuPanel.add(comOrders);
+        menuPanel.add(customers);
         menuPanel.add(inventory);
         menuPanel.add(exit);
 
 
         // Add Listeners
-        orders.addActionListener(new ButtonListener());
+        curOrders.addActionListener(new ButtonListener());
+        comOrders.addActionListener(new ButtonListener());
+        customers.addActionListener(new ButtonListener());
         inventory.addActionListener(new ButtonListener());
         exit.addActionListener(new ButtonListener());
 
@@ -99,10 +116,20 @@ public class HomeScreen extends JFrame{
                 UserLogin login = new UserLogin();
                 
             }
-            if(e.getSource() == orders){
+            if(e.getSource() == curOrders){
                 // Code to implement
                 setVisible(false);
-                OrdersUI order = new OrdersUI(HomeScreen.this);
+                ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, null);
+            }
+            if(e.getSource() == comOrders){
+                // Code to implement
+                //setVisible(false);
+                //OrdersUI order = new OrdersUI(HomeScreen.this);
+            }
+            if(e.getSource() == customers){
+                // Code to implement
+                setVisible(false);
+                ViewCustomers viewCust = new ViewCustomers(HomeScreen.this, null);
             }
 
             if(e.getSource() == inventory){
