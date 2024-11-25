@@ -1,6 +1,7 @@
 //Author: Tara-Lee Donald
 //Last Modified: November 24, 2024
 
+//Constructor accepts customer's name, address, telephone number and contact method.
 public class Customer {
     private String firstName, lastName, address, telephone, contactMethod;
 
@@ -12,6 +13,7 @@ public class Customer {
         this.contactMethod = contactMethod;
     }
 
+    //gettors for customer
     public String getFirstName(){
         return firstName;
     }
@@ -32,6 +34,7 @@ public class Customer {
         return contactMethod;
     }
 
+    //Mutators for customers
     public void setFirstName(String newFName){
         this.firstName = newFName;
     }
