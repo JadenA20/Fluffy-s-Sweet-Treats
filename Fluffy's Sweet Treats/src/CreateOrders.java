@@ -108,6 +108,9 @@ public class CreateOrders extends JFrame{
         entryPanel.add(paymentSelect);
         entryPanel.add(paymentDrop);
 
+        //Adds functionality for payment dropdown
+        paymentDrop.addActionListener(new PaymentDropDownListener());
+
         entryPanel.setLayout(new GridLayout(12,2));
 
         //Save aand Cancel buttons
@@ -117,12 +120,11 @@ public class CreateOrders extends JFrame{
 
         orderPanel.add(save);
         orderPanel.add(cancel);
-
-        //Add functionality for the buttons and the dropdown
-
+        
+        //Add functionality for the buttons
         cancel.addActionListener(new CloseButtonListener());
         save.addActionListener(new SaveButtonListener());
-        paymentDrop.addActionListener(new PaymentDropDownListener());
+        
 
         add(entryPanel, BorderLayout.CENTER);
         add(orderPanel, BorderLayout.SOUTH);
