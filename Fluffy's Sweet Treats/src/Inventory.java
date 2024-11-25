@@ -4,13 +4,14 @@
 //Creates and updates each record of inventory
 
 public class Inventory {
-    private int id, stockCount, priorityStatus;
+    private int stockCount, priorityStatus;
+    private static int id =0;
     private String name, description;
 
     //Constructor accepts the id, description, name, stock amount and priority status of assigned to each inventory item
      
     public Inventory(int id, int stockCount, int priorityStatus, String name, String description){
-        this.id = id;
+        id = id++;
         this.stockCount = stockCount;
         this.priorityStatus = priorityStatus;
         this.name = name;
@@ -19,11 +20,30 @@ public class Inventory {
 
     //Getters for the pivate attributes
 
-    public int getID(){
+    public static int getID(){
         return id;
     }
 
-    //public 
+    public int getStockCount(){
+        return stockCount;
+    }
+
+    public int getPriorityStatus(){
+        return priorityStatus;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getDescription(){
+        return description;
+    }
+
+    
+    
+
+    
 
 
 }
