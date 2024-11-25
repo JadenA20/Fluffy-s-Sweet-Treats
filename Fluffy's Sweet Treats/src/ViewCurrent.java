@@ -1,5 +1,5 @@
 //Authors: Jaden Anthony
-//Last Modified: 15-11-2024
+//Last Modified: 24-11-2024
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-public class OrderArchive extends JFrame{
+public class ViewCurrent extends JFrame{
 
     private JPanel mainPanel, optionPanel, displayPanel;
     private JButton create, edit, delete, export, exit;
@@ -24,16 +24,18 @@ public class OrderArchive extends JFrame{
     private DefaultTableModel model;
     private ArrayList<Order> orderList;
 
-    public OrderArchive thisOrderQueue;
+    public ViewCurrent thisViewCurrent;
 
-    public OrderArchive(OrdersUI ordersUI) {
-      
-        this.thisOrderQueue = this;
-        OrdersUI ordersui = ordersUI; 
+    public ViewCurrent(HomeScreen home, User user) {
+        
+
+        this.thisViewCurrent = this;
+        HomeScreen homescreen = home;
+        User useracc = user;
 
 
         // Set Title
-        setTitle("Order Archive");
+        setTitle("Current Orders");
 
         //Fonts
         Font f = new Font("Comic Sans Ms", Font.BOLD, 30);
@@ -53,10 +55,10 @@ public class OrderArchive extends JFrame{
         
 
         //Labels
-        title =  new JLabel("Orders");
+        title =  new JLabel("Current Orders");
         title.setForeground(new Color(120, 67, 59));
         title.setFont(f);
-        title.setBounds(50, 50, 300, 50);
+        title.setBounds(0, 50, 300, 50);
 
 
         //Buttons
@@ -134,7 +136,6 @@ public class OrderArchive extends JFrame{
         //Table Headings
         String[] columnNames=  {"ID",
             "Name",
-            "Phone #",
             "Date Created",
             "Due Date",
             "Type",
@@ -165,33 +166,34 @@ public class OrderArchive extends JFrame{
 
 
 
-    //Loads Orders from Orders.txt
+    //Loads Orders from CurrentOrders.txt
     private ArrayList<Order> loadOrders() { 
 
         ArrayList<Order> orderList = new ArrayList<Order>();
     
-        File orders = new File("Orders.txt");
+        File orders = new File("CurrentOrders.txt");
         
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("Orders.txt"))){
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
                 String[] details = line.split(";");
 
                 int id = Integer.parseInt(details[0]);
-                String customerName = details[1];
-                String tele_num = details[2];
+                String fName = details[1];
+                String lName = details[2];
                 String currentDate = details[3];
-                String date = details[4];
+                String dueDate = details[4];
                 String type = details[5];
                 String flavour = details[6];
                 String desc = details[7];
-                String price = details[8];
+                String price = String.valueOf(details[8]);
                 String paymentStatus = details[9];
                 String location = details[10];
                 String status = details[11];
-
-                Order o = new Order(id, customerName, tele_num, currentDate, date, type, flavour, desc, price, paymentStatus, location, status);
+                Customer c = new Customer(fName, lName, null, null, null);
+           
+                Order o = new Order(id, c, currentDate, dueDate, type, flavour, desc, Float.valueOf(price), paymentStatus, location, status);
                 orderList.add(o);
 
                 }    
@@ -202,7 +204,7 @@ public class OrderArchive extends JFrame{
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, "I/O Error Occurred.");
+                JOptionPane.showConfirmDialog(null, e.getMessage());
                 System.exit(0);
             }
             /*catch (Exception e) { 
@@ -217,25 +219,27 @@ public class OrderArchive extends JFrame{
 
     private void addToTable(Order o) //Adds order to table
     {
+        
         int id = o.getID();
-        String customerName = o.getCustomerName();
-        String tele_num = o.getPhone();
+        Customer customer = o.getCustomer();
+        String customerName = customer.getName();
         String currentDate = o.getCurrentDate();
-        String date = o.getDueDate();
+        String dueDate = o.getDueDate();
         String type = o.getType();
         String flavour = o.getFlavour();
         String desc = o.getDesc();
-        String price = o.getPrice();
+        String price = String.valueOf(o.getPrice());
         String paymentStatus = o.getPaymentStatus();
         String location = o.getLocation();
         String status = o.getStatus();
+
         
-        String[] order = {String.valueOf(id), customerName, tele_num, currentDate, date, type, flavour, desc, price, paymentStatus, location, status};
+        String[] order = {String.valueOf(id), customerName, currentDate, dueDate, type, flavour, desc, price, paymentStatus, location, status};
         model.addRow(order);        
 
     }
 
-    //Displays Order.txt via table 
+    //Displays CurrentOrder.txt via table 
     private void displayTable(ArrayList<Order> orderList) 
     {
        int n = 0;
