@@ -141,10 +141,9 @@ public class ViewCurrent extends JFrame{
             "Flavour",
             "Description",
             "Price",
-            "Delivery Location",
             "Payment Status",
-            "Due Date",
-            "Status"
+            "Delivery Location",
+            "Due Date"
         };
 
         //Table Details
@@ -192,10 +191,9 @@ public class ViewCurrent extends JFrame{
                 String deliveryLocation = details[7];
                 String paymentStatus = details[8];
                 String dueDate = details[9];
-                String status = details[10];
                 Customer cust = new Customer(fname, lname, null, null, null);
             
-                Current c = new Current(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate, status);
+                Current c = new Current(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate);
                 orderList.add(c);
 
                 }    
@@ -226,17 +224,16 @@ public class ViewCurrent extends JFrame{
         Customer customer = c.getCustomer();
         String customerName = customer.getName();
         String creationDate = c.getCreationDate();
-        String dueDate = c.getDueDate();
         String event = c.getEvent();
         String flavour = c.getFlavour();
         String desc = c.getDesc();
         String price = String.valueOf(c.getPrice());
         String paymentStatus = c.getPaymentStatus();
         String deliveryLocation = c.getDeliveryLocation();
-        String status = c.getStatus();
+        String dueDate = c.getDueDate();
 
         
-        String[] order = {String.valueOf(id), customerName, creationDate, event, flavour, desc, price, deliveryLocation, paymentStatus, dueDate, status};
+        String[] order = {String.valueOf(id), customerName, creationDate, event, flavour, desc, price, deliveryLocation, paymentStatus, dueDate};
         model.addRow(order);        
 
     }
