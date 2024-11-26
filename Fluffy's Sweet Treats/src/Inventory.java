@@ -4,18 +4,18 @@
 //Creates and updates each record of inventory
 
 public class Inventory {
-    protected int stockCount, priorityStatus;
-    protected static int counter = 0; // Static counter for unique IDs
-    protected int id; // Instance-specific id
-    protected String name, description;
+    private int id,stockCount, priorityStatus;
+    private String name, description,storage,shelfLife;
 
     // Constructor accepts the description, name, stock amount, and priority status assigned to each inventory item
-    public Inventory(int stockCount, int priorityStatus, String name, String description) {
-        this.id = counter++; // Assign a unique id and increment the counter
+    public Inventory(int id, int stockCount, int priorityStatus, String name, String description, String storage, String shelfLife) {
+        this.id = id;
         this.stockCount = stockCount;
         this.priorityStatus = priorityStatus;
         this.name = name;
         this.description = description;
+        this.storage = storage;
+        this.shelfLife = shelfLife;
     }
 
     // Getters for the private attributes
@@ -38,8 +38,15 @@ public class Inventory {
     public String getDescription() {
         return this.description;
     }
+    public String getStorage(){
+        return this.storage;
+    }
+    public String getShelfLife(){
+        return this.shelfLife;
+    }
 
     // Setters for the private attributes
+
     public void setStockCount(int newStockCount) {
         this.stockCount = newStockCount;
     }
@@ -55,6 +62,15 @@ public class Inventory {
     public void setDescription(String newDescrip) {
         this.description = newDescrip;
     }
+
+    public void setStorage(String newStore){
+        this.storage = newStore;
+    }
+
+    public void setShelfLife(String newLifeShelf){
+        this.shelfLife = newLifeShelf;
+    }
+
 }
 
 

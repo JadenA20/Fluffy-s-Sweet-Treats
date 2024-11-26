@@ -1,4 +1,4 @@
-//Author:
+//Author: Jada-Kay Williams
 //Last Modified: 
 
 import javax.swing.*;

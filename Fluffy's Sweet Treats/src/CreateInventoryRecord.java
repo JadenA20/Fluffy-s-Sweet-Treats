@@ -1,6 +1,8 @@
-import javax.swing.*;
+//Author: Jada-Kay Williams
+//Last Modified:
 
-public class CreateInventoryRecord extends JFrame{
+import javax.swing.JFrame;
 
-    // Class for the Create Inventory GUI
+public class CreateInventoryRecord extends JFrame {
+    //Class for the Crete Inventory GUI
 }
