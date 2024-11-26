@@ -4,46 +4,59 @@
 //Creates and updates each record of inventory
 
 public class Inventory {
-    private int stockCount, priorityStatus;
-    private static int id =0;
-    private String name, description;
+    protected int stockCount, priorityStatus;
+    protected static int counter = 0; // Static counter for unique IDs
+    protected int id; // Instance-specific id
+    protected String name, description;
 
-    //Constructor accepts the id, description, name, stock amount and priority status of assigned to each inventory item
-     
-    public Inventory(int id, int stockCount, int priorityStatus, String name, String description){
-        id = id++;
+    // Constructor accepts the description, name, stock amount, and priority status assigned to each inventory item
+    public Inventory(int stockCount, int priorityStatus, String name, String description) {
+        this.id = counter++; // Assign a unique id and increment the counter
         this.stockCount = stockCount;
         this.priorityStatus = priorityStatus;
         this.name = name;
         this.description = description;
     }
 
-    //Getters for the pivate attributes
-
-    public static int getID(){
-        return id;
+    // Getters for the private attributes
+    public int getID() {
+        return this.id;
     }
 
-    public int getStockCount(){
-        return stockCount;
+    public int getStockCount() {
+        return this.stockCount;
     }
 
-    public int getPriorityStatus(){
-        return priorityStatus;
+    public int getPriorityStatus() {
+        return this.priorityStatus;
     }
 
-    public String getName(){
-        return name;
+    public String getName() {
+        return this.name;
     }
 
-    public String getDescription(){
-        return description;
+    public String getDescription() {
+        return this.description;
     }
 
-    
-    
+    // Setters for the private attributes
+    public void setStockCount(int newStockCount) {
+        this.stockCount = newStockCount;
+    }
 
-    
+    public void setPriorityStatus(int newPriority) {
+        this.priorityStatus = newPriority;
+    }
 
+    public void setName(String newName) {
+        this.name = newName;
+    }
 
+    public void setDescription(String newDescrip) {
+        this.description = newDescrip;
+    }
 }
+
+
+
+
