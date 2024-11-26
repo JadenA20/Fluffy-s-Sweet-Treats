@@ -1,3 +1,7 @@
+//Authors: Dana Archer
+//Last Modified: 26-11-24
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -113,8 +117,7 @@ public class HomeScreen extends JFrame{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                UserLogin login = new UserLogin();
-                
+                UserLogin login = new UserLogin();   
             }
             if(e.getSource() == curOrders){
                 // Code to implement
@@ -122,9 +125,9 @@ public class HomeScreen extends JFrame{
                 ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, null);
             }
             if(e.getSource() == comOrders){
-                // Code to implement
-                //setVisible(false);
-                //OrdersUI order = new OrdersUI(HomeScreen.this);
+                //Code to implement
+                setVisible(false);
+                ViewComplete viewCom = new ViewComplete(HomeScreen.this, null);
             }
             if(e.getSource() == customers){
                 // Code to implement
@@ -134,7 +137,8 @@ public class HomeScreen extends JFrame{
 
             if(e.getSource() == inventory){
                 // Code to implement
-                // ViewInventory inventory = new ViewInventory(thisHome);
+                //setVisible(false);
+                // ViewInventory inventory = new ViewInventory(HomeScreen.this, null);
             }
         }
     }
