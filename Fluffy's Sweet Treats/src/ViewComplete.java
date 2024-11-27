@@ -180,11 +180,11 @@ public class ViewComplete extends JFrame{
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
                 System.exit(0);
             }
             /*catch (Exception e) { 

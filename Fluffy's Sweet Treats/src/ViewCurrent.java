@@ -169,10 +169,8 @@ public class ViewCurrent extends JFrame{
     private ArrayList<Current> loadOrders() { 
 
         ArrayList<Current> orderList = new ArrayList<Current>();
-    
-        File orders = new File("CurrentOrders.txt");
-        
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("CurrentOrders.txt"))){
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
@@ -188,8 +186,8 @@ public class ViewCurrent extends JFrame{
                 String flavour = details[4];
                 String desc = details[5];
                 String price = String.valueOf(details[6]);
-                String deliveryLocation = details[7];
-                String paymentStatus = details[8];
+                String paymentStatus = details[7];
+                String deliveryLocation = details[8];
                 String dueDate = details[9];
                 Customer cust = new Customer(id, fname, lname, null, null, null);
             
@@ -200,11 +198,11 @@ public class ViewCurrent extends JFrame{
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error in accessing the file. Please try again later.");
                 System.exit(0);
             }
             /*catch (Exception e) { 
@@ -261,19 +259,16 @@ public class ViewCurrent extends JFrame{
                 
             }
             if(e.getSource() == create){
-                // Code to implement
-                setVisible(false);  
+                // Code to implement  
                 CreateOrders creOrd = new CreateOrders();
                 
             }
 
             if(e.getSource() == edit){
-               // setVisible(false);
                //EditOrders ediOrd = new EditOrders();
                 
             }
             if(e.getSource() == delete){
-               setVisible(false);
                DeleteOrders delOrd = new DeleteOrders();
                 
             }

@@ -26,9 +26,9 @@ public class OrderFile{
 
         try{
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("CurrentOrders.txt", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt", true));
 
-            writer.write(currentOrd.getID() + ";" + currentOrd.getCustomer().getName() + ";" + currentOrd.getCreationDate() + ";" + currentOrd.getEvent() + ";" + currentOrd.getFlavour() + ";" + currentOrd.getDesc() + ";" + currentOrd.getPrice() + ";" + currentOrd.getDeliveryLocation() + ";" + currentOrd.getPaymentStatus());
+            writer.write(currentOrd.getID() + ";" + currentOrd.getCustomer().getName() + ";" + currentOrd.getCreationDate() + ";" + currentOrd.getEvent() + ";" + currentOrd.getFlavour() + ";" + currentOrd.getDesc() + ";" + currentOrd.getPrice() + ";" + currentOrd.getDeliveryLocation() + ";" + currentOrd.getPaymentStatus() + ";" + currentOrd.getDueDate());
 
             writer.newLine();
 
@@ -52,11 +52,11 @@ public class OrderFile{
         }
     }*/
 
-    public void load(){
+    public ArrayList<Current> load(){
     
         File orders = new File("CurrentOrders.txt");
             
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("CurrentOrders.txt"))){
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
@@ -85,6 +85,8 @@ public class OrderFile{
         catch(IOException e){
             JOptionPane.showMessageDialog(null, "File could not be accessed at this time.", "File Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        return orderList;
     }
 
 

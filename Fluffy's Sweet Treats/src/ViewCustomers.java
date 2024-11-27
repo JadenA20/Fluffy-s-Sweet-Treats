@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -148,10 +151,8 @@ public class ViewCustomers extends JFrame {
     private ArrayList<Customer> loadOrders() { 
 
         ArrayList<Customer> customerList = new ArrayList<Customer>();
-    
-        File customers = new File("Customers.txt");
-        
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("Customers.txt"))){
+
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
@@ -172,11 +173,11 @@ public class ViewCustomers extends JFrame {
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error accessing file. Please try again later.");
                 System.exit(0);
             }
             /*catch (Exception e) { 
@@ -226,14 +227,26 @@ public class ViewCustomers extends JFrame {
                 
             }
             if(e.getSource() == sortFName){
-               
-                
+                model.setRowCount(0);
+                Collections.sort(customerList, new Comparator<Customer>(){
+
+                    public int compare(Customer c1, Customer c2) {
+                        return c1.getName().split(" ")[0].compareTo(c2.getName().split(" ")[0]);
+                    }
+                });
+                displayTable(customerList);
             }
 
             if(e.getSource() == sortLName){
+                model.setRowCount(0);
+                Collections.sort(customerList, new Comparator<Customer>(){
+
+                    public int compare(Customer c1, Customer c2) {
+                        return c1.getName().split(" ")[1].compareTo(c2.getName().split(" ")[1]);
+                    }
+                });
                
-               
-                
+                displayTable(customerList);
             }
            
         }

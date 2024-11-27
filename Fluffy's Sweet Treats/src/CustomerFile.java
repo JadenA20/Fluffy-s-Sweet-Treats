@@ -22,11 +22,9 @@ public class CustomerFile{
         this.custFile = this; 
     }
 
-    private void load() { 
+    public ArrayList<Customer> load(){ 
 
-        File customers = new File("Customers.txt");
-        
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("Customers.txt"))){
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
@@ -43,9 +41,10 @@ public class CustomerFile{
                 Customer c = new Customer(id,fName, lName, address, tele_num, conMethod);  
                 customerList.add(c);
 
-            }    
-                  
+            }   
+   
         }
+
         catch (FileNotFoundException e) { 
             JOptionPane.showConfirmDialog(null, "File Not Found.");
             System.exit(0);
@@ -54,13 +53,15 @@ public class CustomerFile{
             JOptionPane.showConfirmDialog(null, e.getMessage());
             System.exit(0);
         }
+
+        return customerList;   
     }
     //This function adds the entries to the CurrentOrders.txt file
     public void addToFile(Customer cust){
 
         try{
 
-            BufferedWriter writer = new BufferedWriter(new FileWriter("Customers.txt", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt", true));
 
             writer.write(cust.getID() + ";" +cust.getFirstName() + ";" + cust.getLastName() + ";" + cust.getTelephone() + ";" + cust.getAddress() + ";" + cust.getContactMethod()); 
 

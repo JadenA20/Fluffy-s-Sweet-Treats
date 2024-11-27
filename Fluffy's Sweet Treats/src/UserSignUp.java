@@ -4,6 +4,9 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+
 import javax.swing.*;
 
 
@@ -152,8 +155,7 @@ public class UserSignUp extends JFrame {
                 }
 
                 else{
-                    User u = new User(detail1, detail2, detail3, detail4, null);
-                    u.saveUserDetails(detail1, detail2, detail3, detail4);
+                    saveUserDetails(detail1, detail2, detail3, detail4);
 
                     JOptionPane.showMessageDialog(submit, "User Created Successfully.");
                     setVisible(false);
@@ -168,6 +170,53 @@ public class UserSignUp extends JFrame {
         }
 
     }
-        
+
+    //Function to save user details to text file after sign up
+    public void saveUserDetails(String fname, String lname, String userName, String password){
+        if ((fname.equals("Marcelle")) && (lname.equals("Reid"))){
+            String role = "Admin";
+            User u = new User(fname,lname, userName, password,role);
+
+            Admin a = new Admin(fname, lname, userName, password, role, 0);
+            int key = a.createKey(0);
+
+            String details = fname + ";" + lname + ";" + userName + ";" + password + ";" + role + ";" + key;
+
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("Users.txt", true));
+                bw.write(details);
+                bw.newLine();
+                bw.close();
+
+            } 
+            catch (Exception e) { 
+                JOptionPane.showConfirmDialog(null, "Error saving user details to file.");
+            }
+
+        }
+
+        else 
+        {
+            String role = "Generic";
+            User u = new User(fname,lname, userName, password,role);
+
+            String details = fname + ";" + lname + ";" + userName + ";" + password + ";" + role;
+            
+            try {
+                BufferedWriter bw = new BufferedWriter(new FileWriter("Users.txt", true));
+                bw.write(details);
+                bw.newLine();
+                bw.close();
+            } 
+            catch (Exception e) { 
+                JOptionPane.showConfirmDialog(null, "Error saving user details to file.");
+            }
+
+        }
+
+    }
+
 }
+        
+
            

@@ -19,7 +19,6 @@ public class CreateOrders extends JFrame{
     private JTextField enterFName;
     private JTextField enterLName;
     private JTextField enterNumber;
-    private JTextField enterAddress;
     private JTextField enterContactMethod;
     private JTextField enterDest;
     private JTextField enterAddr;
@@ -35,8 +34,9 @@ public class CreateOrders extends JFrame{
     private OrderFile ofile = new OrderFile();
     private CustomerFile cfile = new CustomerFile();
     private String[] paymentState= {"Deposited", "Pending", "Completed"};
-    private String creationDate, paymentStatus;
-    private static int id;
+    private String creationDate;
+    private String paymentStatus = "Deposited";
+    private int id = 0;
 
     //Constructor formats the frame for the addition of an entry to the Orders.txt file
     public CreateOrders(){
@@ -44,8 +44,6 @@ public class CreateOrders extends JFrame{
 
         orderPanel = new JPanel();
         entryPanel = new JPanel();
-
-        ++id;
 
         LocalDate current = LocalDate.now();
 
@@ -64,14 +62,14 @@ public class CreateOrders extends JFrame{
 
         entryPanel.add(new JLabel("Address:"));
         enterAddr = new JTextField(40);
-        entryPanel.add(enterAddress);
+        entryPanel.add(enterAddr);
 
         entryPanel.add(new JLabel("Telephone Number:"));
         enterNumber = new JTextField(15);
         entryPanel.add(enterNumber);
 
         entryPanel.add(new JLabel("Contact Method (Eg: WhatsApp, Email, Instagram):"));
-        enterContactMethod = new JTextField(15);
+        enterContactMethod = new JTextField(20);
         entryPanel.add(enterContactMethod);
 
         entryPanel.add(new JLabel("Deadline (format: yyyy-mm-dd):"));
@@ -111,7 +109,7 @@ public class CreateOrders extends JFrame{
 
         paymentDrop.addActionListener(new PaymentDropDownListener());
 
-        entryPanel.setLayout(new GridLayout(11,2));
+        entryPanel.setLayout(new GridLayout(12,2));
 
         //Save aand Cancel buttons
        
@@ -187,7 +185,7 @@ public class CreateOrders extends JFrame{
             }
 
             catch(NumberFormatException nfe){
-                JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please ensure numbers are entered in numericaal fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please ensure numbers are entered in numerical fields.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
     
