@@ -90,7 +90,7 @@ public class HomeScreen extends JFrame{
         exit.addActionListener(new ButtonListener());
 
         // Background
-        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
+        ImageIcon background_image = new ImageIcon("background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -134,6 +134,7 @@ public class HomeScreen extends JFrame{
 
             if(e.getSource() == inventory){
                 // Code to implement
+                setVisible(false);
                 ViewInventory viewInvent = new ViewInventory(HomeScreen.this, null);
             }
         }

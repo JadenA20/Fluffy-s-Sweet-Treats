@@ -19,7 +19,7 @@ public class ViewInventory extends JFrame {
 
     
     private JPanel mainPanel, optionPanel, displayPanel;
-    private JButton create, edit, delete, export, exit;
+    private JButton create, edit, delete, exit;
     private JLabel title, backgrounds;
     private JScrollPane scrollPane;
     private JTable table;
@@ -29,6 +29,7 @@ public class ViewInventory extends JFrame {
     public ViewInventory thisViewInventory;
 
     public ViewInventory(HomeScreen home, User user) {
+
         this.thisViewInventory = this;
         HomeScreen homescreen = home;
 
@@ -88,18 +89,16 @@ public class ViewInventory extends JFrame {
         optionPanel.add(create);
         optionPanel.add(edit);
         optionPanel.add(delete);
-        optionPanel.add(export);
         optionPanel.add(exit);
 
         //Add Listeners
         create.addActionListener(new ButtonListener());
         edit.addActionListener(new ButtonListener());
         delete.addActionListener(new ButtonListener());
-        export.addActionListener(new ButtonListener());
         exit.addActionListener(new ButtonListener()); 
 
         //Background
-        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
+        ImageIcon background_image = new ImageIcon("background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -130,11 +129,11 @@ public class ViewInventory extends JFrame {
        };
 
        //Table Details
-       model = new DefaultTableModel();
+       model = new DefaultTableModel(columnnNames,0);
        table = new JTable(model);
        displayTable(inventoryList);
 
-       table.setPreferredScrollableViewportSize(new Dimension(900, orderList.size()*15 +50));
+       table.setPreferredScrollableViewportSize(new Dimension(900, inventoryList.size()*15 +50));
        table.setFillsViewportHeight(true);
        scrollPane = new JScrollPane(table);
        displayPanel.add(scrollPane);
@@ -215,12 +214,13 @@ public class ViewInventory extends JFrame {
                 setVisible(false);
                 HomeScreen home = new HomeScreen(null);
             }
+            /* 
             if(e.getSource() == create){
                 //setVisible(false);
 
             }
             if(e.getSource() ==edit){
-                // setVisible(false);
+                //setVisible(false);
                //EditOrders ediOrd = new EditOrders();
             }
             if(e.getSource()==delete){
@@ -228,7 +228,7 @@ public class ViewInventory extends JFrame {
                //DeleteOrders delOrd = new DeleteOrders();
             }
            
-        }
+       */ }
     }
 
 
