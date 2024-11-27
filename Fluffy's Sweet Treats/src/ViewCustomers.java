@@ -1,4 +1,4 @@
-//Authors: Jaden Anthony
+/Authors: Jaden Anthony
 //Last Modified: 24-11-2024
 
 import java.awt.*;
@@ -240,3 +240,4 @@ public class ViewCustomers extends JFrame {
 
 
 }
+

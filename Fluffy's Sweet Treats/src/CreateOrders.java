@@ -1,5 +1,5 @@
-///Author: Tara-Lee Donald
-//Last Modified: 06-11-2024
+//Author: Tara-Lee Donald
+//Last Modified: 26-11-2024
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -162,13 +162,13 @@ public class CreateOrders extends JFrame{
 
                     Customer customer = new Customer(fname, lname, tele_num, address, contactMethod);
                                             
-                    Current currentOrder = new Current(id, customer, creationDate, event, flavour, desc, Float.parseFloat(price), paymentStatus, deliveryLocation, dueDate, "Ongoing");
+                    Current currentOrder = new Current(id, customer, creationDate, event, flavour, desc, Float.parseFloat(price), paymentStatus, deliveryLocation, dueDate);
 
                     CustomerFile custFile = new CustomerFile();
-                    custFile.addToFile(customer);
+                    custFile.addToCustomerFile(customer);
 
                     OrderFile ordFile = new OrderFile();
-                    ordFile.addToFile(currentOrder);
+                    ordFile.addToCurrentFile(currentOrder);
 
                     JOptionPane.showMessageDialog(CreateOrders.this,"Order Sucessfully Saved", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
                     setVisible(false);
@@ -203,3 +203,4 @@ public class CreateOrders extends JFrame{
     }
 
 }
+

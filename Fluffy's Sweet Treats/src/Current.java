@@ -5,23 +5,23 @@
 
 public class Current extends Order {
 
-    protected String status;
+    protected String dueDate;
 
-    public Current(int id, Customer customer, String creationDate, String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus, String dueDate, String status) {
-        super(id, customer, creationDate, event, flavour, desc, price, deliveryLocation, paymentStatus, dueDate);
+    public Current(int id, Customer customer, String creationDate, String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus, String dueDate) {
+        super(id, customer, creationDate, event, flavour, desc, price, deliveryLocation, paymentStatus);
     
-        this.status = status;
+        this.dueDate = dueDate;
        
     }
 
-    public String getStatus(){
-        return ("Ongoing");
+    public String getDueDate(){
+        return dueDate;
         
     }
 
     //Setters or Mutators for the private variables except current date and id
-    public void setStatus(String newStatus){
-        status = newStatus;
+    public void setStatus(String newDueDate){
+        dueDate = newDueDate;
     }
 
     public void setFName(String newFName){
@@ -52,10 +52,6 @@ public class Current extends Order {
         this.price = newPrice;
     }
 
-    public void setDueDate(String newDueDate){
-        this.date = newDueDate;
-    }
-
     public void setPaymentStatus(String newPaymentStatus){
         this.paymentStatus = newPaymentStatus;
     }
@@ -67,4 +63,11 @@ public class Current extends Order {
 
 
     
+
+
+
+
+
+    
+
 
