@@ -4,8 +4,10 @@
 //Constructor accepts customer's name, address, telephone number and contact method.
 public class Customer {
     private String firstName, lastName, address, telephone, contactMethod;
+    private int id;
 
-    public Customer(String firstName, String lastName, String address, String telephone, String contactMethod){
+    public Customer(int id, String firstName, String lastName, String address, String telephone, String contactMethod){
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -13,13 +15,21 @@ public class Customer {
         this.contactMethod = contactMethod;
     }
 
-    //gettors for customer
+    public int getID(){
+        return id;
+    }
+
     public String getFirstName(){
         return firstName;
     }
 
     public String getLastName(){
         return lastName;
+    }
+
+    public String getName(){
+        String name = this.firstName + " " + this.lastName;
+        return name;
     }
 
     public String getAddress(){
@@ -34,7 +44,6 @@ public class Customer {
         return contactMethod;
     }
 
-    //Mutators for customers
     public void setFirstName(String newFName){
         this.firstName = newFName;
     }

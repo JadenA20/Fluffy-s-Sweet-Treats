@@ -1,0 +1,3 @@
+Kate;Anne;1 TesterPlace Street;876-123-1234;WhatsApp
+Ouida;Gail;2 MadeUp Street;876-319-2067;WhatsApp
+Paul;Mclare;3 AnotherPlace Street;876-335-7615;Instagram

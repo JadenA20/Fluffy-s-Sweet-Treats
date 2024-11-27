@@ -1,33 +1,35 @@
 //Author: Tara-Lee Donald
-//Last Modified: 06-11-2024
+//Last Modified: 26-11-2024
 
-//Creates and updates values of an order
+//Provides the original template of an order
 
-public class Order{
-    private String date, type, desc, location, status, currentDate, paymentStatus, flavour;
-    private Customer customer;
-    private float price;
-    private int id;
+public class Order{ 
+    protected String date;
+    protected String event;
+    protected String desc;
+    protected String deliveryLocation;
+    protected String creationDate;
+    protected String paymentStatus;
+    protected String flavour;
+    protected Customer customer;
+    protected float price;
+    protected int id;
 
     //Constructor accepts the id assigned to the customer, the customer's name, the customer's phone number, the date on which the entry was entered, the due date of the order, the type of cake, the description of the order, the cost of the cake, payment Status of the customer, the delivery location and the status of the progress of the order.
-
-    public Order(int id, Customer customer, String currentDate, String date,String type, String flavour, String desc, float price, String paymentStatus, String location, String status){
+    public Order(int id, Customer customer, String creationDate, String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus){
         this.id = id;
         this.customer = customer;
-        this.date = date;
-        this.type = type;
+        this.event = event;
         this.flavour = flavour;
         this.desc = desc;
         this.price = price;
-        this.location = location;
-        this.status = status;
-        this.currentDate = currentDate;
+        this.deliveryLocation = deliveryLocation;
+        this.creationDate = creationDate;
         this.paymentStatus = paymentStatus;
 
     }
 
     //Getters or Accessors for the private variables
-
     public int getID(){
         return id;
     }
@@ -36,12 +38,8 @@ public class Order{
         return customer;
     }
 
-    public String getDueDate(){
-        return date;
-    }
-
-    public String getType(){
-        return type;
+    public String getEvent(){
+        return event;
     }
 
     public String getDesc(){
@@ -56,65 +54,18 @@ public class Order{
         return paymentStatus;
     }
 
-    public String getLocation(){
-        return location;
+    public String getDeliveryLocation(){
+        return deliveryLocation;
     }
 
-    public String getStatus(){
-        return status;
-    }
-
-    public String getCurrentDate(){
-        return currentDate;
+    public String getCreationDate(){
+        return creationDate;
     }
 
     public String getFlavour(){
         return flavour;
     }
 
-    //Setters or Mutators for the private variables but current date and id
-
-    public void setStatus(String newStatus){
-        this.status = newStatus;
-    }
-
-    public void setFName(String newFName){
-        this.customer.setFirstName(newFName);
-    }
-
-    public void setLName(String newLName){
-        this.customer.setLastName(newLName);
-    }
-
-    public void setLocation(String newLocation){
-        this.location = newLocation;
-    }
-
-    public void setType(String newType){
-        this.type = newType;
-    }
-
-    public void setPhone(String newPhone){
-        this.customer.setTelephone(newPhone);
-    }
-
-    public void setDesc(String newDesc){
-        this.desc = newDesc;
-    }
-
-    public void setPrice(float newPrice){
-        this.price = newPrice;
-    }
-
-    public void setDueDate(String newDueDate){
-        this.date = newDueDate;
-    }
-
-    public void setPaymentStatus(String newPaymentStatus){
-        this.paymentStatus = newPaymentStatus;
-    }
-
-    public void setFlavour(String newFlavour){
-        this.flavour = newFlavour;
-    }
+    
 }
+    
