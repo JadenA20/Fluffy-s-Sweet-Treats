@@ -4,18 +4,21 @@
 //Provides the original template of an order
 
 public class Order{ 
-    protected String date;
+    protected int id;
+    protected Customer customer;
     protected String event;
+    protected String flavour;
     protected String desc;
+    protected float price;
     protected String deliveryLocation;
     protected String creationDate;
     protected String paymentStatus;
-    protected String flavour;
-    protected Customer customer;
-    protected float price;
-    protected int id;
+    
 
-    //Constructor accepts the id assigned to the customer, the customer's name, the customer's phone number, the date on which the entry was entered, the due date of the order, the type of cake, the description of the order, the cost of the cake, payment Status of the customer, the delivery location and the status of the progress of the order.
+    /* Constructor accepts the ID of the order, customer (name, telephone, address, contact method),
+    the date on which the entry was created, the event, the flavour, the description of the order,
+    the cost of the cake, payment status of the customer, the delivery location */
+     
     public Order(int id, Customer customer, String creationDate,  String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus){
         this.id = id;
         this.customer = customer;
@@ -29,6 +32,7 @@ public class Order{
 
     }
 
+    
     //Getters or Accessors for the private variables
     public int getID(){
         return id;
@@ -68,4 +72,5 @@ public class Order{
 
     
 }
+    
     
