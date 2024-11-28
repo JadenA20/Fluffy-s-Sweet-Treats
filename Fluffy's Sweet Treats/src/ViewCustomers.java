@@ -1,4 +1,4 @@
-/Authors: Jaden Anthony
+//Authors: Jaden Anthony, Tara-Lee Donald
 //Last Modified: 24-11-2024
 
 import java.awt.*;
@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,14 +26,18 @@ public class ViewCustomers extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Customer> customerList;
-
+    private int id = 0;
     public ViewCustomers thisViewCustomers;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public ViewCustomers(HomeScreen home, User user) {
+    public ViewCustomers(HomeScreen home, User userAcc, Admin adminAcc) {
 
         this.thisViewCustomers = this;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
         HomeScreen homescreen = home;
-        User useracc = user;
+        
 
         // Set Title
         setTitle("Customers");
@@ -117,7 +124,7 @@ public class ViewCustomers extends JFrame {
         customerList = loadOrders();
 
         //Table Headings
-        String[] columnNames=  {"First Name",
+        String[] columnNames=  {"ID","First Name",
             "Last Name",
             "Address",
             "Telephone #",
@@ -149,12 +156,11 @@ public class ViewCustomers extends JFrame {
 
         ArrayList<Customer> customerList = new ArrayList<Customer>();
     
-        File customers = new File("Customers.txt");
-        
         try (BufferedReader br = Files.newBufferedReader(Paths.get("Customers.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
+                ++id;
                 String[] details = line.split(";");
 
                 String fName = details[0];
@@ -164,18 +170,18 @@ public class ViewCustomers extends JFrame {
                 String conMethod = details[4];
             
                 
-                Customer c = new Customer(fName, lName, address, tele_num, conMethod);  
+                Customer c = new Customer(id, fName, lName, address, tele_num, conMethod);  
                 customerList.add(c);
 
                 }    
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, "Error accessing file. Please try again later.");
                 System.exit(0);
             }
             /*catch (Exception e) { 
@@ -190,14 +196,14 @@ public class ViewCustomers extends JFrame {
 
     private void addToTable(Customer c) //Adds customer to table
     {
-        
+        String id = String.valueOf(c.getID());
         String fname = c.getFirstName();
         String lname = c.getLastName();
         String address = c.getAddress();
         String tele_num = c.getTelephone();
         String conMethod = c.getContactMethod();
         
-        String[] customer = {fname, lname, address, tele_num, conMethod};
+        String[] customer = {id, fname, lname, address, tele_num, conMethod};
         model.addRow(customer);        
 
     }
@@ -221,18 +227,30 @@ public class ViewCustomers extends JFrame {
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                HomeScreen home = new HomeScreen(null);
+                HomeScreen home = new HomeScreen(userAccount, adminAccount);
                 
             }
             if(e.getSource() == sortFName){
-               
-                
+                model.setRowCount(0);
+                Collections.sort(customerList, new Comparator<Customer>(){
+
+                    public int compare(Customer c1, Customer c2) {
+                        return c1.getFirstName().compareTo(c2.getFirstName());
+                    }
+                });
+                displayTable(customerList);
             }
 
             if(e.getSource() == sortLName){
+                model.setRowCount(0);
+                Collections.sort(customerList, new Comparator<Customer>(){
+
+                    public int compare(Customer c1, Customer c2) {
+                        return c1.getLastName().compareTo(c2.getLastName());
+                    }
+                });
                
-               
-                
+                displayTable(customerList);
             }
            
         }
@@ -240,4 +258,3 @@ public class ViewCustomers extends JFrame {
 
 
 }
-
