@@ -1,5 +1,5 @@
 //Authors: Jaden Anthony
-//Last Modified: 14-11-2024
+//Last Modified: 28-11-2024
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -151,15 +151,28 @@ public class UserSignUp extends JFrame {
                 String detail4 = pass.getText();
 
                 if (("".equals(detail1)) || ("".equals(detail2)) || ("".equals(detail3)) || ("".equals(detail4))){
-                    JOptionPane.showMessageDialog(submit, "Missing details detected. Please try again.");
+                    JOptionPane.showMessageDialog(submit, "Please enter data in all fields.");
                 }
 
                 else{
-                    saveUserDetails(detail1, detail2, detail3, detail4);
 
-                    JOptionPane.showMessageDialog(submit, "User Created Successfully.");
-                    setVisible(false);
-                    UserLogin login = new UserLogin();
+                    User u = new User(detail1, detail2, detail3, detail4, null);
+
+                    boolean fNameCheck = u.validNameCheck(detail1);
+                    boolean lNameCheck = u.validNameCheck(detail2);
+
+                    if (fNameCheck == false || lNameCheck == false){
+                        JOptionPane.showMessageDialog(submit, "Invalid first/last name.");
+                    }
+                    else{
+
+                        u.saveUserDetails(detail1, detail2, detail3, detail4);
+
+                        JOptionPane.showMessageDialog(submit, "User Created Successfully.");
+                        setVisible(false);
+                        UserLogin login = new UserLogin();
+                    }
+
                 }
 
             }
@@ -170,53 +183,6 @@ public class UserSignUp extends JFrame {
         }
 
     }
-
-    //Function to save user details to text file after sign up
-    public void saveUserDetails(String fname, String lname, String userName, String password){
-        if ((fname.equals("Marcelle")) && (lname.equals("Reid"))){
-            String role = "Admin";
-            User u = new User(fname,lname, userName, password,role);
-
-            Admin a = new Admin(fname, lname, userName, password, role, 0);
-            int key = a.createKey(0);
-
-            String details = fname + ";" + lname + ";" + userName + ";" + password + ";" + role + ";" + key;
-
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("Users.txt", true));
-                bw.write(details);
-                bw.newLine();
-                bw.close();
-
-            } 
-            catch (Exception e) { 
-                JOptionPane.showConfirmDialog(null, "Error saving user details to file.");
-            }
-
-        }
-
-        else 
-        {
-            String role = "Generic";
-            User u = new User(fname,lname, userName, password,role);
-
-            String details = fname + ";" + lname + ";" + userName + ";" + password + ";" + role;
-            
-            try {
-                BufferedWriter bw = new BufferedWriter(new FileWriter("Users.txt", true));
-                bw.write(details);
-                bw.newLine();
-                bw.close();
-            } 
-            catch (Exception e) { 
-                JOptionPane.showConfirmDialog(null, "Error saving user details to file.");
-            }
-
-        }
-
-    }
-
-}
         
-
+}
            

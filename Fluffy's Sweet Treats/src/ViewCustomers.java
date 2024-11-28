@@ -1,4 +1,4 @@
-//Authors: Jaden Anthony
+//Authors: Jaden Anthony, Tara-Lee Donald
 //Last Modified: 24-11-2024
 
 import java.awt.*;
@@ -28,12 +28,16 @@ public class ViewCustomers extends JFrame {
     private ArrayList<Customer> customerList;
     private int id = 0;
     public ViewCustomers thisViewCustomers;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public ViewCustomers(HomeScreen home, User user) {
+    public ViewCustomers(HomeScreen home, User userAcc, Admin adminAcc) {
 
         this.thisViewCustomers = this;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
         HomeScreen homescreen = home;
-        User useracc = user;
+        
 
         // Set Title
         setTitle("Customers");
@@ -152,7 +156,7 @@ public class ViewCustomers extends JFrame {
 
         ArrayList<Customer> customerList = new ArrayList<Customer>();
     
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt"))){
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("Customers.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
@@ -223,7 +227,7 @@ public class ViewCustomers extends JFrame {
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                HomeScreen home = new HomeScreen(null);
+                HomeScreen home = new HomeScreen(userAccount, adminAccount);
                 
             }
             if(e.getSource() == sortFName){
@@ -254,4 +258,3 @@ public class ViewCustomers extends JFrame {
 
 
 }
-

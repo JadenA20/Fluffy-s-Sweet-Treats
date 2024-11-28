@@ -1,5 +1,5 @@
 //Authors: Dana Archer, Jaden Anthony
-//Last Modified: 14-11-2024
+//Last Modified: 28-11-2024
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -146,10 +146,6 @@ public class UserLogin extends JFrame {
 
     }
 
-    public String getCurrentUser(){
-        return ""; //gets current user
-    }
-
     private class ButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == login){
@@ -158,13 +154,13 @@ public class UserLogin extends JFrame {
                 String detail2 = pass.getText();
 
                 if (("".equals(detail1)) || ("".equals(detail2))){
-                    JOptionPane.showMessageDialog(login, "Missing details detected. Please try again.");
+                    JOptionPane.showMessageDialog(login, "Please enter data in all fields.");
                 }
 
                 else{
                     setVisible(false);
-                    verifyUser(detail1, detail2);
-                 
+                    User u = new User(null, null, detail1, detail2, null);
+                    u.checkAccountType(detail1, detail2);
                 }
             
             }
