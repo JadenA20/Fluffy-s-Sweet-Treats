@@ -25,14 +25,18 @@ public class ViewComplete extends JFrame{
     private ArrayList<Complete> orderList;
 
     public ViewComplete thisViewComplete;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public ViewComplete(HomeScreen home, User user) {
+    public ViewComplete(HomeScreen home, User userAcc, Admin adminAcc) {
         
 
         this.thisViewComplete = this;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
+
         HomeScreen homescreen = home;
-        User useracc = user;
-        
+       
 
 
         // Set Title
@@ -171,7 +175,7 @@ public class ViewComplete extends JFrame{
                 String paymentStatus = details[8];
                 String dueDate = details[9];
                 String dateCompleted = details[10];
-                Customer cust = new Customer(fname, lname, null, null, null);
+                Customer cust = new Customer(id, fname, lname, null, null, null);
             
                 Complete c = new Complete(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate, dateCompleted);
                 orderList.add(c);
@@ -238,7 +242,7 @@ public class ViewComplete extends JFrame{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                HomeScreen home = new HomeScreen(null);
+                HomeScreen home = new HomeScreen(userAccount, adminAccount);
                 
             }
 
