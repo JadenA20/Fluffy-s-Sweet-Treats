@@ -11,25 +11,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class ViewCurrent extends JFrame{
 
-    private JPanel mainPanel, optionPanel, displayPanel;
-    private JButton create, edit, delete, export, exit;
+    private JPanel mainPanel, optionPanel, displayPanel, sortPanel;
+    private JButton create, edit, delete, export, exit, sortDueDate, sortPaymentState, sortCreationDate;
     private JLabel title, backgrounds;
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Current> orderList;
-
+    private int id = 0;
     public ViewCurrent thisViewCurrent;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public ViewCurrent(HomeScreen home, User user) {
+    public ViewCurrent(HomeScreen home, User userAcc, Admin adminAcc) {
         
 
         this.thisViewCurrent = this;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
         HomeScreen homescreen = home;
         //user = user.getFName();
 
@@ -51,6 +58,9 @@ public class ViewCurrent extends JFrame{
         optionPanel = new JPanel();
         optionPanel.setLayout(new FlowLayout());
 
+        sortPanel = new JPanel();
+        sortPanel.setLayout(new FlowLayout());
+
         displayPanel = new JPanel();
         
 
@@ -66,38 +76,61 @@ public class ViewCurrent extends JFrame{
         create.setBackground(new Color(120, 67, 59));
         create.setForeground(new Color(255, 255, 255));
         create.setFont(h);
-        create.setBounds(30, 200, 100, 35);
+        create.setBounds(30, 200, 50, 35);
+
+        sortCreationDate = new JButton("Sort By Creation Date");
+        sortCreationDate.setBackground(new Color(120, 67, 59));
+        sortCreationDate.setForeground(new Color(255, 255, 255));
+        sortCreationDate.setFont(h);
+        sortCreationDate.setBounds(30, 200, 75, 35);
+
+        sortDueDate = new JButton("Sort by Due Date");
+        sortDueDate.setBackground(new Color(120, 67, 59));
+        sortDueDate.setForeground(new Color(255, 255, 255));
+        sortDueDate.setFont(h);
+        sortDueDate.setBounds(30, 200, 75, 35);
+
+        sortPaymentState = new JButton("Sort By Payment Status");
+        sortPaymentState.setBackground(new Color(120, 67, 59));
+        sortPaymentState.setForeground(new Color(255, 255, 255));
+        sortPaymentState.setFont(h);
+        sortPaymentState.setBounds(30, 200, 75, 35);
+
 
         edit = new JButton("Edit");
         edit.setBackground(new Color(120, 67, 59));
         edit.setForeground(new Color(255, 255, 255));
         edit.setFont(h);
-        edit.setBounds(70, 200, 100, 35);
+        edit.setBounds(70, 200, 50, 35);
 
         delete = new JButton("Delete");
         delete.setBackground(new Color(120, 67, 59));
         delete.setForeground(new Color(255, 255, 255));
         delete.setFont(h);
-        delete.setBounds(110, 200, 100, 35);
+        delete.setBounds(110, 200, 50, 35);
 
         export = new JButton("Export");
         export.setBackground(new Color(120, 67, 59));
         export.setForeground(new Color(255, 255, 255));
         export.setFont(h);
-        export.setBounds(150, 200, 100, 35);
+        export.setBounds(150, 200, 50, 35);
 
         exit = new JButton("Exit");
         exit.setBackground(new Color(120, 67, 59));
         exit.setForeground(new Color(255, 255, 255));
         exit.setFont(h);
-        exit.setBounds(190, 200, 100, 35);
+        exit.setBounds(190, 200, 50, 35);
 
 
         //Adding to MainPanel
         mainPanel.add(title);
         mainPanel.add(displayPanel);
+        mainPanel.add(sortPanel);
         mainPanel.add(optionPanel);
         optionPanel.add(create);
+        sortPanel.add(sortDueDate);
+        sortPanel.add(sortCreationDate);
+        sortPanel.add(sortPaymentState);
         optionPanel.add(edit);
         optionPanel.add(delete);
         optionPanel.add(export);
@@ -106,6 +139,9 @@ public class ViewCurrent extends JFrame{
 
         //Add Listeners
         create.addActionListener(new ButtonListener());
+        sortCreationDate.addActionListener(new ButtonListener());
+        sortDueDate.addActionListener(new ButtonListener());
+        sortPaymentState.addActionListener(new ButtonListener());
         edit.addActionListener(new ButtonListener());
         delete.addActionListener(new ButtonListener());
         export.addActionListener(new ButtonListener());
@@ -169,29 +205,26 @@ public class ViewCurrent extends JFrame{
     private ArrayList<Current> loadOrders() { 
 
         ArrayList<Current> orderList = new ArrayList<Current>();
-    
-        File orders = new File("CurrentOrders.txt");
-        
+
         try (BufferedReader br = Files.newBufferedReader(Paths.get("CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
                 String[] details = line.split(";");
-
-                int id = Integer.parseInt(details[0]);
-                String custName = details[1];
+                ++id;
+                String custName = details[0];
                 String sepName[] = custName.split(" ");
                 String fname = sepName[0];
                 String lname = sepName[1];
-                String creationDate = details[2];
-                String event = details[3];
-                String flavour = details[4];
-                String desc = details[5];
-                String price = String.valueOf(details[6]);
+                String creationDate = details[1];
+                String event = details[2];
+                String flavour = details[3];
+                String desc = details[4];
+                String price = String.valueOf(details[5]);
+                String paymentStatus = details[6];
                 String deliveryLocation = details[7];
-                String paymentStatus = details[8];
-                String dueDate = details[9];
-                Customer cust = new Customer(fname, lname, null, null, null);
+                String dueDate = details[8];
+                Customer cust = new Customer(id, fname, lname, null, null, null);
             
                 Current c = new Current(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate);
                 orderList.add(c);
@@ -200,12 +233,12 @@ public class ViewCurrent extends JFrame{
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
-                System.exit(0);
+                JOptionPane.showMessageDialog(null, "Error in accessing the file. Please try again later.");
+                //System.exit(0);
             }
             /*catch (Exception e) { 
                 JOptionPane.showConfirmDialog(null, "Error Occurred.");
@@ -256,25 +289,62 @@ public class ViewCurrent extends JFrame{
     private class ButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
+
                 setVisible(false);
-                HomeScreen home = new HomeScreen(null);
+                HomeScreen home = new HomeScreen(userAccount, adminAccount);
                 
             }
             if(e.getSource() == create){
                 // Code to implement
-                setVisible(false);  
+                model.setRowCount(0);
                 CreateOrders creOrd = new CreateOrders();
+                
+                displayTable(orderList);
                 
             }
 
+            if(e.getSource() == sortCreationDate){
+                model.setRowCount(0);
+                Collections.sort(orderList, new Comparator<Current>(){
+
+                    public int compare(Current o1, Current o2) {
+                        return o1.getCreationDate().compareTo(o2.getCreationDate());
+                    }
+                });
+               
+                displayTable(orderList);
+            }
+
+            if(e.getSource() == sortDueDate){
+                model.setRowCount(0);
+                Collections.sort(orderList, new Comparator<Current>(){
+
+                    public int compare(Current o1, Current o2) {
+                        return o1.getDueDate().compareTo(o2.getDueDate());
+                    }
+                });
+               
+                displayTable(orderList);
+            }
+
+            if(e.getSource() == sortPaymentState){
+                model.setRowCount(0);
+                Collections.sort(orderList, new Comparator<Current>(){
+
+                    public int compare(Current o1, Current o2) {
+                        return o1.getPaymentStatus().compareTo(o2.getPaymentStatus());
+                    }
+                });
+               
+                displayTable(orderList);
+            }
+
             if(e.getSource() == edit){
-               // setVisible(false);
                //EditOrders ediOrd = new EditOrders();
                 
             }
             if(e.getSource() == delete){
-               // setVisible(false);
-               //DeleteOrders delOrd = new DeleteOrders();
+               DeleteOrders delOrd = new DeleteOrders();
                 
             }
             if(e.getSource() == export){
