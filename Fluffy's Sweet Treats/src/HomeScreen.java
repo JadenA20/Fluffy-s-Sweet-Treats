@@ -1,3 +1,7 @@
+//Authors: Dana Archer
+//Last Modified: 26-11-24
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -90,7 +94,7 @@ public class HomeScreen extends JFrame{
         exit.addActionListener(new ButtonListener());
 
         // Background
-        ImageIcon background_image = new ImageIcon("background.png");
+        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -113,8 +117,7 @@ public class HomeScreen extends JFrame{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                UserLogin login = new UserLogin();
-                
+                UserLogin login = new UserLogin();   
             }
             if(e.getSource() == curOrders){
                 // Code to implement
@@ -122,9 +125,9 @@ public class HomeScreen extends JFrame{
                 ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, null);
             }
             if(e.getSource() == comOrders){
-                // Code to implement
-                //setVisible(false);
-                //OrdersUI order = new OrdersUI(HomeScreen.this);
+                //Code to implement
+                setVisible(false);
+                ViewComplete viewCom = new ViewComplete(HomeScreen.this, null);
             }
             if(e.getSource() == customers){
                 // Code to implement
@@ -134,11 +137,13 @@ public class HomeScreen extends JFrame{
 
             if(e.getSource() == inventory){
                 // Code to implement
-                setVisible(false);
-                ViewInventory viewInvent = new ViewInventory(HomeScreen.this, null);
+                //setVisible(false);
+                // ViewInventory inventory = new ViewInventory(HomeScreen.this, null);
             }
         }
     }
     
 
 }
+
+

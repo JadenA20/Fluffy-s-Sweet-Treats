@@ -25,7 +25,7 @@ public class ViewInventory extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Inventory> inventoryList;
-
+    private int id=0;
     public ViewInventory thisViewInventory;
 
     public ViewInventory(HomeScreen home, User user) {
@@ -125,7 +125,6 @@ public class ViewInventory extends JFrame {
         "Stock Count",
         "Area of Storage",
         "Shelf Life"
-        
        };
 
        //Table Details
@@ -147,6 +146,9 @@ public class ViewInventory extends JFrame {
 
     //Loads Inventory Items
     private ArrayList<Inventory> loadInventory(){
+
+        ArrayList<Inventory> inventoryList = new ArrayList<Inventory>();
+
         File items = new File("InventoryItems.txt");
         
         try(BufferedReader bre = Files.newBufferedReader(Paths.get("InventoryItems.txt"))){
@@ -154,8 +156,7 @@ public class ViewInventory extends JFrame {
 
             while((line = bre.readLine()) !=null){
                 String []itemDetails = line.split(";");
-
-                int id = Integer.parseInt(itemDetails[0]);
+                ++id;
                 String itName = itemDetails[1];
                 String itDesc = itemDetails[2];
                 int priorityStat = Integer.parseInt(itemDetails[3]);
@@ -177,6 +178,7 @@ public class ViewInventory extends JFrame {
             JOptionPane.showConfirmDialog(null, e.getMessage());
                 System.exit(0);
             }
+
         return inventoryList;
 
     }
@@ -236,6 +238,3 @@ public class ViewInventory extends JFrame {
 
 
 }
-
-
-

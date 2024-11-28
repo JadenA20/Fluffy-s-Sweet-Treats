@@ -1,2 +1,2 @@
-1;Cake Boxes;Silver 4"square;2;240;Cabinet;N/A
+Cake Boxes;Silver 4"square;2;240;Cabinet;N/A
 
