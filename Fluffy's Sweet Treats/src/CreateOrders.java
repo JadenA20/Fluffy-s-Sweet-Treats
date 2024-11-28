@@ -36,7 +36,6 @@ public class CreateOrders extends JFrame{
     private String[] paymentState= {"Deposited", "Pending", "Completed"};
     private String creationDate;
     private String paymentStatus = "Deposited";
-    private int id = 0;
 
     //Constructor formats the frame for the addition of an entry to the Orders.txt file
     public CreateOrders(){
@@ -165,9 +164,9 @@ public class CreateOrders extends JFrame{
                 String flavour = enterFlavour.getText().trim();
                 String method = enterContactMethod.getText().trim();
                             
-                customer = new Customer(id, fName, lName, addr, tele_num, method);
+                customer = new Customer(0,fName, lName, addr, tele_num, method);
 
-                order = new Current(id, customer, creationDate, event, flavour, desc, price, paymentStatus, location, date);
+                order = new Current(0,customer, creationDate, event, flavour, desc, price, paymentStatus, location, date);
                 
                 ofile.addToCurrentFile(order);
                 cfile.addToFile(customer);

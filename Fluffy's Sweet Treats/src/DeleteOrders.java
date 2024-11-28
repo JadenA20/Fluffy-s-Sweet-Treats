@@ -54,6 +54,7 @@ public class DeleteOrders extends JFrame {
                     int id_num = Integer.parseInt(enterID.getText().trim());
 
                     ofile.deleteFromCurrentFile(id_num);
+                    setVisible(false);
                 }
                 else{
                     setVisible(false);

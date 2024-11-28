@@ -28,10 +28,10 @@ public class OrderFile{
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt", true));
 
-            writer.write(currentOrd.getID() + ";" + currentOrd.getCustomer().getName() + ";" + currentOrd.getCreationDate() + ";" + currentOrd.getEvent() + ";" + currentOrd.getFlavour() + ";" + currentOrd.getDesc() + ";" + currentOrd.getPrice() + ";" + currentOrd.getDeliveryLocation() + ";" + currentOrd.getPaymentStatus() + ";" + currentOrd.getDueDate());
+            writer.write(currentOrd.getCustomer().getName() + ";" + currentOrd.getCreationDate() + ";" + currentOrd.getEvent() + ";" + currentOrd.getFlavour() + ";" + currentOrd.getDesc() + ";" + currentOrd.getPrice() + ";" + currentOrd.getDeliveryLocation() + ";" + currentOrd.getPaymentStatus() + ";" + currentOrd.getDueDate());
 
             writer.newLine();
-
+            writer.flush();
             writer.close();
         } 
         catch (IOException e) {
@@ -54,30 +54,27 @@ public class OrderFile{
 
     public ArrayList<Current> load(){
     
-        File orders = new File("CurrentOrders.txt");
-            
         try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
                 String[] details = line.split(";");
 
-                int id_num = Integer.parseInt(details[0]);
-                String custName = details[1];
+                String custName = details[0];
                 String sepName[] = custName.split(" ");
                 String fname = sepName[0];
                 String lname = sepName[1];
-                String creationDate = details[2];
-                String event = details[3];
-                String flavour = details[4];
-                String desc = details[5];
-                String price = String.valueOf(details[6]);
-                String deliveryLocation = details[7];
-                String paymentStatus = details[8];
-                String dueDate = details[9];
-                Customer cust = new Customer(id_num,fname, lname, null, null, null);
+                String creationDate = details[1];
+                String event = details[2];
+                String flavour = details[3];
+                String desc = details[4];
+                String price = String.valueOf(details[5]);
+                String deliveryLocation = details[6];
+                String paymentStatus = details[7];
+                String dueDate = details[8];
+                Customer cust = new Customer(0,fname, lname, null, null, null);
             
-                Current c = new Current(id_num, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate);
+                Current c = new Current(0,cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate);
                 orderList.add(c);
             }
 

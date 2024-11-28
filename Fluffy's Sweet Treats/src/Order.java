@@ -13,11 +13,11 @@ public class Order{
     protected String flavour;
     protected Customer customer;
     protected float price;
-    protected static int id;
+    protected int id;
 
     //Constructor accepts the id assigned to the customer, the customer's name, the customer's phone number, the date on which the entry was entered, the due date of the order, the type of cake, the description of the order, the cost of the cake, payment Status of the customer, the delivery location and the status of the progress of the order.
     public Order(int id, Customer customer, String creationDate, String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus){
-        this.id = ++id;
+        this.id = id;
         this.customer = customer;
         this.event = event;
         this.flavour = flavour;

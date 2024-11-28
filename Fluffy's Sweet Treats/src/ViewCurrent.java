@@ -23,7 +23,7 @@ public class ViewCurrent extends JFrame{
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Current> orderList;
-
+    private int id = 0;
     public ViewCurrent thisViewCurrent;
 
     public ViewCurrent(HomeScreen home, User user) {
@@ -175,20 +175,19 @@ public class ViewCurrent extends JFrame{
                 
             while ((line = br.readLine()) != null){
                 String[] details = line.split(";");
-
-                int id = Integer.parseInt(details[0]);
-                String custName = details[1];
+                ++id;
+                String custName = details[0];
                 String sepName[] = custName.split(" ");
                 String fname = sepName[0];
                 String lname = sepName[1];
-                String creationDate = details[2];
-                String event = details[3];
-                String flavour = details[4];
-                String desc = details[5];
-                String price = String.valueOf(details[6]);
-                String paymentStatus = details[7];
-                String deliveryLocation = details[8];
-                String dueDate = details[9];
+                String creationDate = details[1];
+                String event = details[2];
+                String flavour = details[3];
+                String desc = details[4];
+                String price = String.valueOf(details[5]);
+                String paymentStatus = details[6];
+                String deliveryLocation = details[7];
+                String dueDate = details[8];
                 Customer cust = new Customer(id, fname, lname, null, null, null);
             
                 Current c = new Current(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate);
@@ -259,8 +258,10 @@ public class ViewCurrent extends JFrame{
                 
             }
             if(e.getSource() == create){
-                // Code to implement  
+                // Code to implement
                 CreateOrders creOrd = new CreateOrders();
+                model.setRowCount(0);
+                displayTable(orderList);
                 
             }
 

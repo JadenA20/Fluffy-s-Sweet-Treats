@@ -26,7 +26,7 @@ public class ViewCustomers extends JFrame {
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Customer> customerList;
-
+    private int id = 0;
     public ViewCustomers thisViewCustomers;
 
     public ViewCustomers(HomeScreen home, User user) {
@@ -151,19 +151,19 @@ public class ViewCustomers extends JFrame {
     private ArrayList<Customer> loadOrders() { 
 
         ArrayList<Customer> customerList = new ArrayList<Customer>();
-
+    
         try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
+                ++id;
                 String[] details = line.split(";");
 
-                int id = Integer.parseInt(details[0]);
-                String fName = details[1];
-                String lName = details[2];
-                String address = details[3];
-                String tele_num = details[4];
-                String conMethod = details[5];
+                String fName = details[0];
+                String lName = details[1];
+                String address = details[2];
+                String tele_num = details[3];
+                String conMethod = details[4];
             
                 
                 Customer c = new Customer(id, fName, lName, address, tele_num, conMethod);  
@@ -231,7 +231,7 @@ public class ViewCustomers extends JFrame {
                 Collections.sort(customerList, new Comparator<Customer>(){
 
                     public int compare(Customer c1, Customer c2) {
-                        return c1.getName().split(" ")[0].compareTo(c2.getName().split(" ")[0]);
+                        return c1.getFirstName().compareTo(c2.getFirstName());
                     }
                 });
                 displayTable(customerList);
@@ -242,7 +242,7 @@ public class ViewCustomers extends JFrame {
                 Collections.sort(customerList, new Comparator<Customer>(){
 
                     public int compare(Customer c1, Customer c2) {
-                        return c1.getName().split(" ")[1].compareTo(c2.getName().split(" ")[1]);
+                        return c1.getLastName().compareTo(c2.getLastName());
                     }
                 });
                

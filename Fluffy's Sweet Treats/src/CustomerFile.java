@@ -29,16 +29,15 @@ public class CustomerFile{
                 
             while ((line = br.readLine()) != null){
                 String[] details = line.split(";");
-
-                int id = Integer.parseInt(details[0]);
-                String fName = details[1];
-                String lName = details[2];
-                String address = details[3];
-                String tele_num = details[4];
-                String conMethod = details[5];
+                
+                String fName = details[0];
+                String lName = details[1];
+                String address = details[2];
+                String tele_num = details[3];
+                String conMethod = details[4];
             
                 
-                Customer c = new Customer(id,fName, lName, address, tele_num, conMethod);  
+                Customer c = new Customer(0,fName, lName, address, tele_num, conMethod);  
                 customerList.add(c);
 
             }   
@@ -63,10 +62,10 @@ public class CustomerFile{
 
             BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Customers.txt", true));
 
-            writer.write(cust.getID() + ";" +cust.getFirstName() + ";" + cust.getLastName() + ";" + cust.getTelephone() + ";" + cust.getAddress() + ";" + cust.getContactMethod()); 
+            writer.write(cust.getFirstName() + ";" + cust.getLastName() + ";" + cust.getTelephone() + ";" + cust.getAddress() + ";" + cust.getContactMethod()); 
 
             writer.newLine();
-
+            writer.flush();
             writer.close();
         } 
         catch (IOException e) {
