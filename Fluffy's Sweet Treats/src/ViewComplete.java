@@ -171,7 +171,7 @@ public class ViewComplete extends JFrame{
                 String paymentStatus = details[8];
                 String dueDate = details[9];
                 String dateCompleted = details[10];
-                Customer cust = new Customer(fname, lname, null, null, null);
+                Customer cust = new Customer(id,fname, lname, null, null, null);
             
                 Complete c = new Complete(id, cust, creationDate, event, flavour, desc, Float.valueOf(price), deliveryLocation, paymentStatus, dueDate, dateCompleted);
                 orderList.add(c);
@@ -180,11 +180,11 @@ public class ViewComplete extends JFrame{
                   
             }
             catch (FileNotFoundException e) { 
-                JOptionPane.showConfirmDialog(null, "File Not Found.");
+                JOptionPane.showMessageDialog(null, "File Not Found.");
                 System.exit(0);
             }
             catch (IOException e) { 
-                JOptionPane.showConfirmDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, e.getMessage());
                 System.exit(0);
             }
             /*catch (Exception e) { 

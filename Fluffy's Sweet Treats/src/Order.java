@@ -15,11 +15,8 @@ public class Order{
     protected String paymentStatus;
     
 
-    /* Constructor accepts the ID of the order, customer (name, telephone, address, contact method),
-    the date on which the entry was created, the event, the flavour, the description of the order,
-    the cost of the cake, payment status of the customer, the delivery location */
-     
-    public Order(int id, Customer customer, String creationDate,  String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus){
+    //Constructor accepts the id assigned to the customer, the customer's name, the customer's phone number, the date on which the entry was entered, the due date of the order, the type of cake, the description of the order, the cost of the cake, payment Status of the customer, the delivery location and the status of the progress of the order.
+    public Order(int id, Customer customer, String creationDate, String event, String flavour, String desc, float price, String deliveryLocation, String paymentStatus){
         this.id = id;
         this.customer = customer;
         this.event = event;

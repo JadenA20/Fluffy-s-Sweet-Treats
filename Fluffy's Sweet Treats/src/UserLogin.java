@@ -4,6 +4,14 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 
@@ -140,7 +148,7 @@ public class UserLogin extends JFrame {
 
     public String getCurrentUser(){
         return ""; //gets current user
-        }
+    }
 
     private class ButtonListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
@@ -155,8 +163,7 @@ public class UserLogin extends JFrame {
 
                 else{
                     setVisible(false);
-                    User u = new User(detail1, detail2, null, null, null);
-                    u.verifyUser(detail1, detail2);
+                    verifyUser(detail1, detail2);
                  
                 }
             
@@ -172,9 +179,44 @@ public class UserLogin extends JFrame {
 
     }
 
+    
+    //Funtion to ensure login details match with saved user details
+    public void verifyUser(String user, String pass){
 
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\Users.txt"))){
+            String line;
+                
+            while ((line = br.readLine()) != null){
+                   
+                String[] breakdown = line.split(";");
+                
+                String savedUser = breakdown[2];
+                String savedPass = breakdown[3];
+            
+                if ((savedUser.equals(user)) && (savedPass.equals(pass)) ){
+                    if (user.equals("Fluffy")){
+                        AdminUI admin = new AdminUI();
+                    }
+                    else{
+                        HomeScreen home = new HomeScreen(user);
+                    }
+                    break;
+                }
+                
+            }
+                    
+        }
+        catch (FileNotFoundException e) { 
+            JOptionPane.showMessageDialog(null, "File Not Found.");
+            System.exit(0);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error accessing file. Try again later.");
+            System.exit(0);
+        }
+          
 
-
-
+    }
 
 }

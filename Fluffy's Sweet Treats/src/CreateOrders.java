@@ -16,11 +16,12 @@ public class CreateOrders extends JFrame{
     private JButton save;
     private JPanel orderPanel;
     private JPanel entryPanel;
-    private JTextField enterName;
+    private JTextField enterFName;
+    private JTextField enterLName;
     private JTextField enterNumber;
-    private JTextField enterAddress;
     private JTextField enterContactMethod;
     private JTextField enterDest;
+    private JTextField enterAddr;
     private JTextField enterDate;
     private JTextField enterType;
     private JTextField enterPrice;
@@ -28,19 +29,20 @@ public class CreateOrders extends JFrame{
     private JTextArea enterDesc;
     private JLabel paymentSelect;
     private JComboBox<String> paymentDrop;
-    private Order order;
+    private Current order;
+    private Customer customer;
+    private OrderFile ofile = new OrderFile();
+    private CustomerFile cfile = new CustomerFile();
     private String[] paymentState= {"Deposited", "Pending", "Completed"};
-    private String creationDate, paymentStatus;
-    private static int id;
+    private String creationDate;
+    private String paymentStatus = "Deposited";
 
-    //Constructor formatts the frame for the addition of an entry to the Orders.txt file
+    //Constructor formats the frame for the addition of an entry to the Orders.txt file
     public CreateOrders(){
         setTitle("New Order Entry");
 
         orderPanel = new JPanel();
         entryPanel = new JPanel();
-
-        ++id;
 
         LocalDate current = LocalDate.now();
 
@@ -48,20 +50,25 @@ public class CreateOrders extends JFrame{
 
 
         //Input fields for user
-        entryPanel.add(new JLabel("Name of Customer (Eg. John Doe):")); 
-        enterName = new JTextField(40);
-        entryPanel.add(enterName);
+
+        entryPanel.add(new JLabel("Customer's First Name: ")); 
+        enterFName = new JTextField(40);
+        entryPanel.add(enterFName);
+
+        entryPanel.add(new JLabel("Customer's Last Name: ")); 
+        enterLName = new JTextField(40);
+        entryPanel.add(enterLName);
 
         entryPanel.add(new JLabel("Address:"));
-        enterAddress = new JTextField(10);
-        entryPanel.add(enterAddress);
+        enterAddr = new JTextField(40);
+        entryPanel.add(enterAddr);
 
         entryPanel.add(new JLabel("Telephone Number:"));
-        enterNumber = new JTextField(10);
+        enterNumber = new JTextField(15);
         entryPanel.add(enterNumber);
 
         entryPanel.add(new JLabel("Contact Method (Eg: WhatsApp, Email, Instagram):"));
-        enterContactMethod = new JTextField(15);
+        enterContactMethod = new JTextField(20);
         entryPanel.add(enterContactMethod);
 
         entryPanel.add(new JLabel("Deadline (format: yyyy-mm-dd):"));
@@ -99,7 +106,9 @@ public class CreateOrders extends JFrame{
         entryPanel.add(paymentSelect);
         entryPanel.add(paymentDrop);
 
-        entryPanel.setLayout(new GridLayout(11,2));
+        paymentDrop.addActionListener(new PaymentDropDownListener());
+
+        entryPanel.setLayout(new GridLayout(12,2));
 
         //Save aand Cancel buttons
        
@@ -108,12 +117,11 @@ public class CreateOrders extends JFrame{
 
         orderPanel.add(save);
         orderPanel.add(cancel);
-
-        //Add functionality for the buttons and the dropdown
-
+        
+        //Add functionality for the buttons
         cancel.addActionListener(new CloseButtonListener());
         save.addActionListener(new SaveButtonListener());
-        paymentDrop.addActionListener(new PaymentDropDownListener());
+        
 
         add(entryPanel, BorderLayout.CENTER);
         add(orderPanel, BorderLayout.SOUTH);
@@ -144,48 +152,39 @@ public class CreateOrders extends JFrame{
         public void actionPerformed(ActionEvent e){
             try{
 
-                String name = enterName.getText();
-                String sep[] = name.split(" ");
-                String fname = sep[0];
-                String lname = sep[1];
-                String address = enterAddress.getText();
-                String tele_num = enterNumber.getText();
-                String contactMethod = enterContactMethod.getText();
-                String dueDate = enterDate.getText();
-                String event = enterType.getText();
-                String desc = enterDesc.getText();
-                String price = enterPrice.getText();
-                String deliveryLocation = enterDest.getText();
-                String flavour = enterFlavour.getText();
+                String fName = enterFName.getText().trim();
+                String lName = enterLName.getText().trim();
+                String tele_num = enterNumber.getText().trim();
+                String date = enterDate.getText().trim();
+                String event = enterType.getText().trim();
+                String desc = enterDesc.getText().trim();
+                float price = Float.parseFloat(enterPrice.getText().trim());
+                String location = enterDest.getText().trim();
+                String addr = enterAddr.getText().trim();
+                String flavour = enterFlavour.getText().trim();
+                String method = enterContactMethod.getText().trim();
+                            
+                customer = new Customer(0,fName, lName, addr, tele_num, method);
 
-                if (name.length() >= 2 ){
+                order = new Current(0,customer, creationDate, event, flavour, desc, price, paymentStatus, location, date);
+                
+                ofile.addToCurrentFile(order);
+                cfile.addToFile(customer);
+                
 
-                    Customer customer = new Customer(fname, lname, tele_num, address, contactMethod);
-                                            
-                    Current currentOrder = new Current(id, customer, creationDate, event, flavour, desc, Float.parseFloat(price), paymentStatus, deliveryLocation, dueDate);
-
-                    CustomerFile custFile = new CustomerFile();
-                    custFile.addToCustomerFile(customer);
-
-                    OrderFile ordFile = new OrderFile();
-                    ordFile.addToCurrentFile(currentOrder);
-
-                    JOptionPane.showMessageDialog(CreateOrders.this,"Order Sucessfully Saved", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
-                    setVisible(false);
-                    
-                    
-                }
-
-                else{
-                    JOptionPane.showMessageDialog(CreateOrders.this,"Name entered is Invalid.", "Name Entry Invalid",JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(CreateOrders.this,"Order Sucessfully Saved", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
+                
+                setVisible(false);
 
             }
                       
-            
             catch (NullPointerException npe) {
                 JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please check to ensure all fields are filled correctly.", "Error", JOptionPane.ERROR_MESSAGE);
  
+            }
+
+            catch(NumberFormatException nfe){
+                JOptionPane.showMessageDialog(CreateOrders.this, "Invalid Entry Detected. Please ensure numbers are entered in numerical fields.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
     

@@ -1,15 +1,22 @@
 //Author: Tara-Lee Donald
 //Last Modified: November 24, 2024
 
+//Constructor accepts customer's name, address, telephone number and contact method.
 public class Customer {
     private String firstName, lastName, address, telephone, contactMethod;
+    private int id;
 
-    public Customer(String firstName, String lastName, String address, String telephone, String contactMethod){
+    public Customer(int id, String firstName, String lastName, String address, String telephone, String contactMethod){
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.telephone = telephone;
         this.contactMethod = contactMethod;
+    }
+
+    public int getID(){
+        return id;
     }
 
     public String getFirstName(){
