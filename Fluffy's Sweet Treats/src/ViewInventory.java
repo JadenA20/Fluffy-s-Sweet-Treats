@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,18 +22,22 @@ public class ViewInventory extends JFrame {
 
     
     private JPanel mainPanel, optionPanel, displayPanel;
-    private JButton create, edit, delete, exit;
+    private JButton create, edit, delete, sortByPriority, exit;
     private JLabel title, backgrounds;
     private JScrollPane scrollPane;
     private JTable table;
     private DefaultTableModel model;
     private ArrayList<Inventory> inventoryList;
-    private int id=0;
+    private int id = 0;
     public ViewInventory thisViewInventory;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public ViewInventory(HomeScreen home, User user) {
+    public ViewInventory(HomeScreen home,  User userAcc, Admin adminAcc) {
 
         this.thisViewInventory = this;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
         HomeScreen homescreen = home;
 
         //Set Title
@@ -75,6 +82,12 @@ public class ViewInventory extends JFrame {
         delete.setForeground(new Color(255, 255, 255));
         delete.setFont(h);
         delete.setBounds(110, 200, 100, 35);
+
+        sortByPriority = new JButton("Sort By Priority");
+        sortByPriority.setBackground(new Color(120, 67, 59));
+        sortByPriority.setForeground(new Color(255, 255, 255));
+        sortByPriority.setFont(h);
+        sorByPriority.setBounds(30, 200, 75, 35);
 
         exit = new JButton("Exit");
         exit.setBackground(new Color(120, 67, 59));
@@ -149,20 +162,19 @@ public class ViewInventory extends JFrame {
 
         ArrayList<Inventory> inventoryList = new ArrayList<Inventory>();
 
-        File items = new File("InventoryItems.txt");
-        
         try(BufferedReader bre = Files.newBufferedReader(Paths.get("InventoryItems.txt"))){
             String line;
 
             while((line = bre.readLine()) !=null){
                 String []itemDetails = line.split(";");
+
                 ++id;
-                String itName = itemDetails[1];
-                String itDesc = itemDetails[2];
-                int priorityStat = Integer.parseInt(itemDetails[3]);
-                int itstockCount = Integer.parseInt(itemDetails[4]);
-                String itStorage = itemDetails[5];
-                String itShelf = itemDetails[6];
+                String itName = itemDetails[0];
+                String itDesc = itemDetails[1];
+                int priorityStat = Integer.parseInt(itemDetails[2]);
+                int itstockCount = Integer.parseInt(itemDetails[3]);
+                String itStorage = itemDetails[4];
+                String itShelf = itemDetails[5];
                 
                 Inventory i = new Inventory(id, itstockCount,priorityStat,itName,itDesc,itStorage,itShelf);
                 inventoryList.add(i);
@@ -214,13 +226,28 @@ public class ViewInventory extends JFrame {
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                HomeScreen home = new HomeScreen(null);
+                HomeScreen home = new HomeScreen(userAccount, adminAccount);
             }
-            /* 
+
+            if(e.getSource() == sortByPriority){
+                model.setRowCount(0);
+                Collections.sort(inventoryList, new Comparator<Inventory>(){
+
+                    public int compare(Inventory o1, Inventory o2){
+                        return Integer.compare(o1.getPriorityStatus(), o2.getPriorityStatus());
+
+                    }
+                });
+            }
+             
             if(e.getSource() == create){
-                //setVisible(false);
+                model.setRowCount(0);
+                CreateInventoryRecord createInv = new CreateInventoryRecord(thisViewInventory, userAccount, adminAccount);
+
+                displayTable(inventoryList);
 
             }
+                /* 
             if(e.getSource() ==edit){
                 //setVisible(false);
                //EditOrders ediOrd = new EditOrders();
@@ -229,6 +256,7 @@ public class ViewInventory extends JFrame {
                 // setVisible(false);
                //DeleteOrders delOrd = new DeleteOrders();
             }
+
            
        */ }
     }

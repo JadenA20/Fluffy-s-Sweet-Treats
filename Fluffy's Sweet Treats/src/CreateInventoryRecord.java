@@ -1,3 +1,4 @@
+
 //Author: Jada-kay Williams
 //Last Modified: 27-11-2024
 
@@ -5,7 +6,6 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
 import javax.swing.*;
 
 public class CreateInventoryRecord extends JFrame{
@@ -25,11 +25,19 @@ public class CreateInventoryRecord extends JFrame{
     private JComboBox<String> priorityDrop;
     private InventoryFile infile = new InventoryFile();
     private String[] prioritystate= {"1", "2", "3"};
-    private String prioritystatus = " ";
+    private int prioritystatus = 1;
+    private ViewInventory thisViewInventory;
+    private User userAccount;
+    private Admin adminAccount;
   
 
     //Constructor formats the frame for the addition of an entry to the InventoryItems.txt file
-    public CreateInventoryRecord(){
+    public CreateInventoryRecord(ViewInventory viewInt, User userAcc, Admin adminAcc){
+
+        this.thisViewInventory = viewInt;
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
+
         setTitle("New Inventory Entry");
 
         itemPanel = new JPanel();
@@ -58,7 +66,7 @@ public class CreateInventoryRecord extends JFrame{
         enterAreaofStorage = new JTextField(30);
         entryPanel.add(enterAreaofStorage);
 
-        entryPanel.add(new JLabel("Enter self life or expriration:"));
+        entryPanel.add(new JLabel("Enter shelf life or expiration:"));
         entershelflife = new JTextField(30);
         entryPanel.add(entershelflife);
 
@@ -102,7 +110,7 @@ public class CreateInventoryRecord extends JFrame{
     private class PriorityDropDownListener implements ActionListener{
         public void actionPerformed(ActionEvent e){
             try{
-                prioritystatus = (String) priorityDrop.getSelectedItem();
+                prioritystatus = (int) priorityDrop.getSelectedItem();
             }
 
             catch(NullPointerException npe){
@@ -119,18 +127,23 @@ public class CreateInventoryRecord extends JFrame{
 
                 String name = enterItemName.getText().trim();
                 String description = enterItemDesc.getText().trim();
-                String stockCount = enterStockCount.getText().trim();
+                int stockCount = Integer.parseInt(enterStockCount.getText().trim());
                 String storage = enterAreaofStorage.getText().trim();
                 String shelfLife= entershelflife.getText().trim();
 
-                Inventory item = new Inventory(0,Integer.parseInt(stockCount), Integer.parseInt(prioritystatus), name, description, storage, shelfLife);
-                
-                infile.addToInventoryFile(item);
-                
+                if(shelfLife.equals("")|| description.equals("")||storage.equals("")||name.equals("")){
+                    JOptionPane.showMessageDialog(CreateInventoryRecord.this, "Invalid Entry Detected. Please check to ensure all fields are filled correctly.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                else{
+                    Inventory item = new Inventory(0,stockCount, prioritystatus, name, description, storage, shelfLife);
+                    
+                    infile.addToInventoryFile(item);
+                    
 
-                JOptionPane.showMessageDialog(CreateInventoryRecord.this,"Item Sucessfully Added", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
-                
-                setVisible(false);
+                    JOptionPane.showMessageDialog(CreateInventoryRecord.this,"Item Sucessfully Added", "Successful Entry",JOptionPane.INFORMATION_MESSAGE);
+                    
+                    setVisible(false);
+                }
 
             }
                       

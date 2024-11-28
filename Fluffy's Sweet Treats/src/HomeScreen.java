@@ -1,7 +1,6 @@
 //Authors: Dana Archer
 //Last Modified: 26-11-24
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -20,12 +19,14 @@ public class HomeScreen extends JFrame{
     private JButton curOrders, comOrders, customers, inventory, exit;
 
     public HomeScreen thisHome;
+    public User userAccount;
+    public Admin adminAccount;
 
-    public HomeScreen (String username){
+    public HomeScreen (User userAcc, Admin adminAcc){
         this.thisHome = this;
-        User user = new User(null, null, username, null, null);
-
-
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
+        
         // Set Title
         setTitle("Fluffy's Sweet Treats Home Screen");
 
@@ -41,10 +42,22 @@ public class HomeScreen extends JFrame{
         menuPanel.setLayout(null);
 
 
-        welcome =  new JLabel("Welcome, " + user + "!");
-        welcome.setForeground(new Color(120, 67, 59));
-        welcome.setFont(f);
-        welcome.setBounds(80, 50, 300, 50);
+        if (userAcc == null){
+
+            welcome =  new JLabel("Welcome, " + adminAcc.getFName() + "!");
+            welcome.setForeground(new Color(120, 67, 59));
+            welcome.setFont(f);
+            welcome.setBounds(80, 50, 300, 50);
+
+        }
+        else {
+
+            welcome =  new JLabel("Welcome, " + userAcc.getFName() + "!");
+            welcome.setForeground(new Color(120, 67, 59));
+            welcome.setFont(f);
+            welcome.setBounds(80, 50, 300, 50);
+        }
+       
 
         curOrders = new JButton("Current Orders");
         curOrders.setBackground(new Color(120, 67, 59));
@@ -94,7 +107,7 @@ public class HomeScreen extends JFrame{
         exit.addActionListener(new ButtonListener());
 
         // Background
-        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
+        ImageIcon background_image = new ImageIcon("../background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -122,28 +135,26 @@ public class HomeScreen extends JFrame{
             if(e.getSource() == curOrders){
                 // Code to implement
                 setVisible(false);
-                ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, null);
+                ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, userAccount, adminAccount);
             }
             if(e.getSource() == comOrders){
                 //Code to implement
                 setVisible(false);
-                ViewComplete viewCom = new ViewComplete(HomeScreen.this, null);
+                ViewComplete viewCom = new ViewComplete(HomeScreen.this, userAccount, adminAccount);
             }
             if(e.getSource() == customers){
                 // Code to implement
                 setVisible(false);
-                ViewCustomers viewCust = new ViewCustomers(HomeScreen.this, null);
+                ViewCustomers viewCust = new ViewCustomers(HomeScreen.this, userAccount, adminAccount);
             }
 
             if(e.getSource() == inventory){
                 // Code to implement
-                //setVisible(false);
-                // ViewInventory inventory = new ViewInventory(HomeScreen.this, null);
+                setVisible(false);
+                ViewInventory inventory = new ViewInventory(HomeScreen.this, userAccount, adminAccount);
             }
         }
     }
     
 
 }
-
-

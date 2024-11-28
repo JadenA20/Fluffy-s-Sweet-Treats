@@ -145,7 +145,7 @@ public class ViewCurrent extends JFrame{
 
 
         //Background
-        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
+        ImageIcon background_image = new ImageIcon("background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -202,7 +202,7 @@ public class ViewCurrent extends JFrame{
 
         ArrayList<Current> orderList = new ArrayList<Current>();
 
-        try (BufferedReader br = Files.newBufferedReader(Paths.get("C:\\Users\\IOLYN DONALD\\Documents\\Fluffy-s-Sweet-Treats\\Fluffy's Sweet Treats\\src\\CurrentOrders.txt"))){
+        try (BufferedReader br = Files.newBufferedReader(Paths.get("CurrentOrders.txt"))){
             String line;
                 
             while ((line = br.readLine()) != null){
