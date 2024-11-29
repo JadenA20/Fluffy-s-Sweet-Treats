@@ -1,21 +1,24 @@
 //Author: Jaden Anthony
-//Last Modified: 14-11-2024
+//Last Modified: November 28th, 2024
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
-public class AdminUI extends JFrame{
+public class ConfirmAdmin extends JFrame{
 
     private JPanel mainPanel;
     private JLabel adminKey, title;
     private JTextField key;
     private JButton enter, exit;
 
-    public AdminUI thisAdminUI;
+    public ConfirmAdmin thisAdminUI;
+    public Admin adminAccount;
 
-    public AdminUI(){
+    public ConfirmAdmin(Admin admin){
+
+        this.adminAccount = admin;
 
         // Set Title
         setTitle("Admin Key Confirmation Screen");
@@ -114,8 +117,8 @@ public class AdminUI extends JFrame{
                 else{
                     setVisible(false);
                     int intKey = Integer.parseInt(detail1);
-                    Admin a = new Admin(null, null, null, null, null, intKey);
-                    a.verifyUser(intKey);
+                    Admin a = new Admin(adminAccount.getFName(), adminAccount.getLName(), adminAccount.getUserName(), adminAccount.getPassword(), adminAccount.getRole(), intKey);
+                    a.verifyUser(adminAccount.getUserName(), adminAccount.getPassword(), intKey);
                  
                 }
             
