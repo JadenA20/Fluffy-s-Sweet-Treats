@@ -1,3 +1,7 @@
+//Authors: Dana Archer
+//Last Modified: November 27th, 2024
+
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,14 +17,17 @@ import javax.swing.JPanel;
 public class HomeScreen extends JFrame{
     private JPanel menuPanel;
     private JLabel welcome, backgrounds;
-    private JButton orders, inventory, exit;
+    private JButton curOrders, comOrders, customers, inventory, exit;
 
-    public HomeScreen thisHome;
+    private HomeScreen thisHome;
+    private User userAccount;
+    private Admin adminAccount;
 
-    public HomeScreen (String user){
+    public HomeScreen (User userAcc, Admin adminAcc){
         this.thisHome = this;
-        //UserLogin loginScreen = user; 
-
+        this.userAccount = userAcc;
+        this.adminAccount = adminAcc;
+        
         // Set Title
         setTitle("Fluffy's Sweet Treats Home Screen");
 
@@ -36,16 +43,40 @@ public class HomeScreen extends JFrame{
         menuPanel.setLayout(null);
 
 
-        welcome =  new JLabel("Welcome, " + user + "!");
-        welcome.setForeground(new Color(120, 67, 59));
-        welcome.setFont(f);
-        welcome.setBounds(80, 50, 300, 50);
+        if (userAcc == null){
 
-        orders = new JButton("Orders");
-        orders.setBackground(new Color(120, 67, 59));
-        orders.setForeground(new Color(255, 255, 255));
-        orders.setFont(h);
-        orders.setBounds(30, 200, 100, 35);
+            welcome =  new JLabel("Welcome, " + adminAcc.getFName() + "!");
+            welcome.setForeground(new Color(120, 67, 59));
+            welcome.setFont(f);
+            welcome.setBounds(80, 50, 300, 50);
+
+        }
+        else {
+
+            welcome =  new JLabel("Welcome, " + userAcc.getFName() + "!");
+            welcome.setForeground(new Color(120, 67, 59));
+            welcome.setFont(f);
+            welcome.setBounds(80, 50, 300, 50);
+        }
+       
+
+        curOrders = new JButton("Current Orders");
+        curOrders.setBackground(new Color(120, 67, 59));
+        curOrders.setForeground(new Color(255, 255, 255));
+        curOrders.setFont(h);
+        curOrders.setBounds(30, 150, 155, 35);
+
+        comOrders = new JButton("Completed Orders");
+        comOrders.setBackground(new Color(120, 67, 59));
+        comOrders.setForeground(new Color(255, 255, 255));
+        comOrders.setFont(h);
+        comOrders.setBounds(200, 150, 155, 35);
+
+        customers = new JButton("Customers");
+        customers.setBackground(new Color(120, 67, 59));
+        customers.setForeground(new Color(255, 255, 255));
+        customers.setFont(h);
+        customers.setBounds(30, 200, 100, 35);
 
         inventory = new JButton("Inventory");
         inventory.setBackground(new Color(120, 67, 59));
@@ -62,18 +93,22 @@ public class HomeScreen extends JFrame{
 
 
         menuPanel.add(welcome);
-        menuPanel.add(orders);
+        menuPanel.add(curOrders);
+        menuPanel.add(comOrders);
+        menuPanel.add(customers);
         menuPanel.add(inventory);
         menuPanel.add(exit);
 
 
         // Add Listeners
-        orders.addActionListener(new ButtonListener());
+        curOrders.addActionListener(new ButtonListener());
+        comOrders.addActionListener(new ButtonListener());
+        customers.addActionListener(new ButtonListener());
         inventory.addActionListener(new ButtonListener());
         exit.addActionListener(new ButtonListener());
 
         // Background
-        ImageIcon background_image = new ImageIcon("C:/Users/jaden/OneDrive/UWI/Java Programs/Fluffy's Sweet Treats/Images/background.png");
+        ImageIcon background_image = new ImageIcon("../background.png");
         Image img = background_image.getImage();
         Image temp_img = img.getScaledInstance(600, 400, Image.SCALE_SMOOTH);
         background_image =  new ImageIcon(temp_img);
@@ -96,18 +131,28 @@ public class HomeScreen extends JFrame{
         public void actionPerformed(ActionEvent e){
             if(e.getSource() == exit){
                 setVisible(false);
-                UserLogin login = new UserLogin();
-                
+                UserLogin login = new UserLogin();   
             }
-            if(e.getSource() == orders){
+            if(e.getSource() == curOrders){
                 // Code to implement
                 setVisible(false);
-                OrdersUI order = new OrdersUI(HomeScreen.this);
+                ViewCurrent viewCur = new ViewCurrent(HomeScreen.this, userAccount, adminAccount);
+            }
+            if(e.getSource() == comOrders){
+                //Code to implement
+                setVisible(false);
+                ViewComplete viewCom = new ViewComplete(HomeScreen.this, userAccount, adminAccount);
+            }
+            if(e.getSource() == customers){
+                // Code to implement
+                setVisible(false);
+                ViewCustomers viewCust = new ViewCustomers(HomeScreen.this, userAccount, adminAccount);
             }
 
             if(e.getSource() == inventory){
                 // Code to implement
-                // ViewInventory inventory = new ViewInventory(thisHome);
+                setVisible(false);
+                ViewInventory inventory = new ViewInventory(HomeScreen.this, userAccount, adminAccount);
             }
         }
     }
