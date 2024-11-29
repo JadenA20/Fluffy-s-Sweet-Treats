@@ -1,0 +1,6 @@
+Cake Boxes;Silver 4" square;2;240;N/A;N/A
+Ramekins;Gold 4" square;2;87;N/A;N/A
+Ramekins;Gold 6" x 2";1;60;N/A;N/A
+Sour Cream;1.5lb tubs;3;3;Refridgerator;3 weeks
+Icing Sugar;2lb bags;3;2;N/A;N/A
+Eggs;2 18 packs;1;36;Refridgerator;5 weeks

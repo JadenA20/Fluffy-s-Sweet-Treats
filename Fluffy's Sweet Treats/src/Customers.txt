@@ -1,0 +1,5 @@
+Kate;Anne;1 TesterPlace Street;876-283-9234;WhatsApp
+Ouida;Gail;2 MadeUp Street;876-319-2067;WhatsApp
+Paul;Mclare;3 AnotherPlace Street;876-335-7615;Instagram
+Shawontay;Trevers;4 Windbreaker Avenue;347-727-2848;Email
+Yanique;Astin;17 TurtleDrive;876-428-5026;WhatsApp
